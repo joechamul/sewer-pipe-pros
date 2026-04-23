@@ -68,9 +68,6 @@ const ogImageUrl = ogImage ?? `${siteUrl}${base}/logo.png`;
       href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap"
     />
 
-    <!-- Sitemap -->
-    <link rel="sitemap" href={`${base}/sitemap-index.xml`} />
-
     {jsonLd && (
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     )}

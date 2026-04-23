@@ -1,4 +1,2 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://joechamul.github.io/sewer-pipe-pros/sitemap-index.xml
