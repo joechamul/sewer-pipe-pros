@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopStrip from '../components/TopStrip.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyCall from '../components/StickyCall.astro';
+import Hero from '../components/Hero.astro';
+import TrustBar from '../components/TrustBar.astro';
+import AboutSection from '../components/AboutSection.astro';
+import ServicesGrid from '../components/ServicesGrid.astro';
+import EmergencyBanner from '../components/EmergencyBanner.astro';
+import WhyUs from '../components/WhyUs.astro';
+import ServiceAreas from '../components/ServiceAreas.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { areas } from '../data/areas';
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Plumber',
+  '@id': `${siteUrl}${base}/#business`,
+  name: 'Sewer Pipe Pros Inc.',
+  alternateName: 'Sewer Pipe Pros',
+  description:
+    "Sewer Pipe Pros Inc. is a licensed Los Angeles plumbing, drain, and sewer contractor serving Greater LA. Lic. #1126184, C36 & C42.",
+  url: `${siteUrl}${base}/`,
+  telephone: '+1-310-780-0362',
+  priceRange: '$$',
+  image: `${siteUrl}${base}/logo.png`,
+  logo: `${siteUrl}${base}/logo.png`,
+  slogan: 'We Serve Differently',
+  areaServed: areas.map((a) => ({
+    '@type': 'City',
+    name: a.name,
+  })),
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Los Angeles',
+    addressRegion: 'CA',
+    addressCountry: 'US',
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: [
+        'Monday', 'Tuesday', 'Wednesday',
+        'Thursday', 'Friday', 'Saturday', 'Sunday',
+      ],
+      opens: '00:00',
+      closes: '23:59',
+    },
+  ],
+  sameAs: [
+    'https://www.yelp.com/biz/sewer-pipe-pros-los-angeles',
+  ],
+  hasCredential: [
+    {
+      '@type': 'EducationalOccupationalCredential',
+      name: 'California Contractor License #1126184',
+      credentialCategory: 'License',
+      educationalLevel: 'C36 Plumbing Contractor, C42 Sanitation Systems Contractor',
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="Sewer Pipe Pros Inc. · LA Plumbing, Drain & Sewer Experts"
+  description="Licensed Los Angeles plumbing, drain & sewer contractor. Trenchless sewer repair, hydro-jetting, water heaters, repipes and more. Call (310) 780-0362."
+  jsonLd={jsonLd}
+>
+  <TopStrip />
+  <Header />
+
+  <main id="main">
+    <Hero />
+    <TrustBar />
+    <AboutSection />
+    <ServicesGrid />
+    <EmergencyBanner />
+    <WhyUs />
+    <ServiceAreas />
+    <ContactSection />
+  </main>
+
+  <Footer />
+  <StickyCall />
+</BaseLayout>

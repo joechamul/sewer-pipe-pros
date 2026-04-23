@@ -1,0 +1,91 @@
+---
+import Icon from './Icon.astro';
+import { areas } from '../data/areas';
+
+export interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class="areas section section-dark">
+  <div class="container">
+    <header class="areas__header">
+      <span class="eyebrow">Service Areas</span>
+      <h2 class="section-title">Proudly serving Greater Los Angeles.</h2>
+      {!compact && (
+        <p class="section-lead">
+          From Downtown and DTLA lofts to Westside beach homes and Valley ADUs — we cover the LA basin and beyond. Don't see your neighborhood? Call us at <a href="tel:+13107800362" class="text-cyan">(310) 780-0362</a>.
+        </p>
+      )}
+    </header>
+
+    <ul class="areas__grid reveal">
+      {areas.map((area) => (
+        <li>
+          <a class="areas__chip" href={`${base}/areas/${area.slug}/`}>
+            <span class="areas__chip-dot" aria-hidden="true"></span>
+            <span>{area.name}</span>
+            <span class="areas__chip-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .areas__header { margin-bottom: 2rem; max-width: 60ch; }
+
+  .areas__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .areas__chip {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #e5e7ec;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast), transform var(--t-fast);
+  }
+  .areas__chip:hover {
+    background: rgba(63, 194, 238, 0.1);
+    border-color: rgba(63, 194, 238, 0.35);
+    color: #fff;
+    transform: translateX(2px);
+  }
+
+  .areas__chip-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--cyan);
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(63,194,238,0.15);
+  }
+
+  .areas__chip-arrow {
+    margin-left: auto;
+    color: rgba(255,255,255,0.35);
+    transition: color var(--t-fast), transform var(--t-fast);
+  }
+  .areas__chip:hover .areas__chip-arrow {
+    color: var(--cyan);
+    transform: translateX(3px);
+  }
+</style>

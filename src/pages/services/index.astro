@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TopStrip from '../../components/TopStrip.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import StickyCall from '../../components/StickyCall.astro';
+import ServicesGrid from '../../components/ServicesGrid.astro';
+import ContactSection from '../../components/ContactSection.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="Plumbing Services · Sewer Pipe Pros Inc."
+  description="Every plumbing service we offer — sewer, drain, water heaters, repipes, gas, and fixtures. Licensed Los Angeles contractor, Lic. #1126184 · C36 & C42."
+>
+  <TopStrip />
+  <Header />
+
+  <main id="main">
+    <section class="svc-index-hero">
+      <div class="container">
+        <nav class="svc-index-hero__crumbs" aria-label="Breadcrumb">
+          <a href={`${base}/`}>Home</a>
+          <span aria-hidden="true">/</span>
+          <span>Services</span>
+        </nav>
+        <span class="chip chip--dark">23 services · One licensed crew</span>
+        <h1>Plumbing services in Los Angeles.</h1>
+        <p>
+          From a slow kitchen drain to a full trenchless sewer replacement, Sewer Pipe Pros handles every part of the job — and stands behind all of it.
+        </p>
+      </div>
+    </section>
+
+    <ServicesGrid
+      eyebrow="All Services"
+      title="Find what you need. Filter by category."
+      lead="Tap any service for a detail page, or call (310) 780-0362 to talk through your situation."
+    />
+
+    <ContactSection
+      eyebrow="Book It"
+      title="Not sure which service you need?"
+      lead="No problem. Describe what's going on and we'll diagnose it — same-day in most of LA."
+    />
+  </main>
+
+  <Footer />
+  <StickyCall />
+</BaseLayout>
+
+<style>
+  .svc-index-hero {
+    background:
+      radial-gradient(ellipse at 90% 0%, rgba(63,194,238,0.2), transparent 55%),
+      radial-gradient(ellipse at 10% 110%, rgba(229,32,42,0.2), transparent 55%),
+      var(--ink);
+    color: #fff;
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+  .svc-index-hero__crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 1.25rem;
+  }
+  .svc-index-hero__crumbs a { color: var(--cyan); }
+  .svc-index-hero h1 { color: #fff; margin: 1rem 0 0.8rem; max-width: 18ch; }
+  .svc-index-hero p { color: #c9ccd6; max-width: 60ch; font-size: 1.15rem; }
+</style>

@@ -1,0 +1,189 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopStrip from '../components/TopStrip.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyCall from '../components/StickyCall.astro';
+import AboutSection from '../components/AboutSection.astro';
+import WhyUs from '../components/WhyUs.astro';
+import ContactSection from '../components/ContactSection.astro';
+import Icon from '../components/Icon.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="About Sewer Pipe Pros Inc. · Owner Robert Manuel Chamul"
+  description="Meet Robert Manuel Chamul and the Sewer Pipe Pros team. Licensed LA plumbing & sewer contractor (Lic. #1126184 · C36, C42)."
+>
+  <TopStrip />
+  <Header />
+
+  <main id="main">
+    <!-- About page hero -->
+    <section class="about-hero">
+      <div class="container about-hero__inner">
+        <nav class="about-hero__crumbs" aria-label="Breadcrumb">
+          <a href={`${base}/`}>Home</a>
+          <span aria-hidden="true">/</span>
+          <span>About</span>
+        </nav>
+        <span class="chip chip--dark">Owner-Operated · Since Day One</span>
+        <h1 class="about-hero__title">
+          We're the plumbing team LA keeps coming back to.
+        </h1>
+        <p class="about-hero__sub">
+          Sewer Pipe Pros Inc. is a licensed Los Angeles plumbing and sewer contractor — built by Robert Manuel Chamul on honest service, upfront pricing, and the right license classifications to handle the whole job.
+        </p>
+      </div>
+    </section>
+
+    <AboutSection />
+
+    <!-- Stats -->
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="about-stats">
+          <div class="about-stats__item">
+            <span class="about-stats__num">2</span>
+            <span class="about-stats__lbl">License Classifications<br /><strong>C36 · C42</strong></span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__num">24/7</span>
+            <span class="about-stats__lbl">Emergency dispatch<br />by a real human</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__num">28</span>
+            <span class="about-stats__lbl">LA neighborhoods<br />regularly served</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__num">23</span>
+            <span class="about-stats__lbl">Services under<br />one roof</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <WhyUs />
+
+    <!-- License block -->
+    <section class="section license-section">
+      <div class="container license-section__grid">
+        <div class="reveal">
+          <span class="eyebrow">License &amp; Credentials</span>
+          <h2>A license for every part of the job.</h2>
+          <p>Most plumbers hold a C36. A C42 license adds the authority to handle sanitation systems — sewer laterals, leach fields, and other drain work regulated by the state. Holding both means we can legally (and competently) take a job from the sink to the city tap.</p>
+        </div>
+        <div class="license-card reveal">
+          <span class="license-card__kicker">Lic. #1126184</span>
+          <ul>
+            <li><Icon name="check" size={20} /><span><strong>C36 — Plumbing Contractor.</strong> Installs, alters, and repairs plumbing systems for water, gas, fixtures, and appliances.</span></li>
+            <li><Icon name="check" size={20} /><span><strong>C42 — Sanitation Systems.</strong> Works with sewer mains, laterals, septic systems, and related excavation.</span></li>
+            <li><Icon name="check" size={20} /><span><strong>Fully insured.</strong> General liability and workers' comp current.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <ContactSection
+      eyebrow="Get In Touch"
+      title="Ready to work with us?"
+      lead="Call us directly, or send a request and we'll reach back out shortly."
+    />
+  </main>
+
+  <Footer />
+  <StickyCall />
+</BaseLayout>
+
+<style>
+  .about-hero {
+    background:
+      radial-gradient(ellipse at 90% 0%, rgba(63,194,238,0.2), transparent 55%),
+      radial-gradient(ellipse at 0% 100%, rgba(229,32,42,0.22), transparent 55%),
+      var(--ink);
+    color: #fff;
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+  .about-hero__inner { max-width: 960px; }
+  .about-hero__crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 1.25rem;
+  }
+  .about-hero__crumbs a { color: var(--cyan); }
+  .about-hero__title {
+    color: #fff;
+    margin: 1rem 0 1rem;
+    max-width: 22ch;
+  }
+  .about-hero__sub { max-width: 60ch; color: #c9ccd6; font-size: 1.15rem; }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: -2rem;
+    position: relative;
+    z-index: 2;
+  }
+  @media (max-width: 860px) { .about-stats { grid-template-columns: repeat(2, 1fr); } }
+
+  .about-stats__item {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 1.5rem 1.25rem;
+    box-shadow: var(--shadow-sm);
+    display: grid;
+    gap: 0.3rem;
+    border-top: 3px solid var(--red);
+  }
+  .about-stats__num {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 2.8rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .about-stats__lbl { color: var(--muted); font-size: 0.9rem; }
+  .about-stats__lbl strong { color: var(--ink); }
+
+  .license-section__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(2rem, 4vw, 3rem);
+    align-items: start;
+  }
+  @media (max-width: 900px) { .license-section__grid { grid-template-columns: 1fr; } }
+
+  .license-card {
+    background: var(--ink);
+    color: #fff;
+    border-radius: var(--r-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-lg);
+    border-top: 4px solid var(--red);
+  }
+  .license-card__kicker {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--cyan);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  .license-card ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; }
+  .license-card li { display: flex; gap: 0.6rem; align-items: start; color: #c9ccd6; }
+  .license-card strong { color: #fff; display: block; font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.06em; }
+  .license-card :global(svg) { color: var(--cyan); flex-shrink: 0; margin-top: 2px; }
+</style>

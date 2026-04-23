@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Sewer Pipe Pros">
+  <rect width="64" height="64" rx="10" fill="#1a1c24"/>
+  <!-- red wing -->
+  <path d="M8 38c4-12 14-16 24-16-6 2-10 6-12 12-3 6-8 8-12 4z" fill="#e5202a"/>
+  <!-- blue water drop -->
+  <path d="M40 10c6 8 12 14 12 22a12 12 0 0 1-24 0c0-8 6-14 12-22z" fill="#3fc2ee"/>
+  <path d="M40 14c5 7 10 12 10 18a10 10 0 0 1-20 0c0-6 5-11 10-18z" fill="#1e7bd6"/>
+  <!-- white eagle silhouette -->
+  <path d="M34 28c2-1 5-1 7 0 2 1 3 3 3 5l-3-1-2 2-2-2-3 1c0-2 0-4 0-5z" fill="#ffffff"/>
+</svg>

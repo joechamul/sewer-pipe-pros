@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TopStrip from '../../components/TopStrip.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import StickyCall from '../../components/StickyCall.astro';
+import ServiceAreas from '../../components/ServiceAreas.astro';
+import ContactSection from '../../components/ContactSection.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title="LA Service Areas · Sewer Pipe Pros Inc."
+  description="Sewer Pipe Pros serves Greater Los Angeles — from DTLA and Hollywood to the Westside, South Bay, Valley, and beyond. Licensed plumber #1126184."
+>
+  <TopStrip />
+  <Header />
+
+  <main id="main">
+    <section class="areas-hero">
+      <div class="container">
+        <nav class="areas-hero__crumbs" aria-label="Breadcrumb">
+          <a href={`${base}/`}>Home</a>
+          <span aria-hidden="true">/</span>
+          <span>Service Areas</span>
+        </nav>
+        <span class="chip chip--dark">Greater LA coverage</span>
+        <h1>Where we work.</h1>
+        <p>
+          We cover the LA basin — from the coast to the Valley, from Pasadena down to Long Beach. Don't see your neighborhood? Call us anyway. We travel for the right job.
+        </p>
+      </div>
+    </section>
+
+    <ServiceAreas />
+
+    <ContactSection
+      eyebrow="Your Neighborhood"
+      title="Not sure if we cover you?"
+      lead="Give us a call. If we don't service your block, we'll refer you to someone we trust."
+    />
+  </main>
+
+  <Footer />
+  <StickyCall />
+</BaseLayout>
+
+<style>
+  .areas-hero {
+    background:
+      radial-gradient(ellipse at 90% 0%, rgba(63,194,238,0.2), transparent 55%),
+      radial-gradient(ellipse at 10% 110%, rgba(229,32,42,0.2), transparent 55%),
+      var(--ink);
+    color: #fff;
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+  .areas-hero__crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 1.25rem;
+  }
+  .areas-hero__crumbs a { color: var(--cyan); }
+  .areas-hero h1 { color: #fff; margin: 1rem 0 0.8rem; }
+  .areas-hero p { color: #c9ccd6; max-width: 60ch; font-size: 1.15rem; }
+</style>

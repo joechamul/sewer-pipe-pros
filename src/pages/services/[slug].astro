@@ -1,0 +1,113 @@
+---
+import ServiceLayout from '../../layouts/ServiceLayout.astro';
+import { services } from '../../data/services';
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+
+// Category labels for display
+const categoryLabels: Record<string, string> = {
+  sewer: 'Sewer & Drain',
+  water: 'Water & Heaters',
+  pipe: 'Piping & Gas',
+  fixture: 'Fixtures & Appliances',
+};
+
+// Minimal markdown renderer for long descriptions (### headings, lists, paragraphs, bold)
+function renderMarkdown(md: string): string {
+  const lines = md.replace(/\r\n/g, '\n').split('\n');
+  let html = '';
+  let listOpen = false;
+
+  const inline = (t: string): string =>
+    t
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>');
+
+  const closeList = () => {
+    if (listOpen) {
+      html += '</ul>';
+      listOpen = false;
+    }
+  };
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) {
+      closeList();
+      continue;
+    }
+    if (line.startsWith('### ')) {
+      closeList();
+      html += `<h3>${inline(line.slice(4))}</h3>`;
+    } else if (line.startsWith('## ')) {
+      closeList();
+      html += `<h2>${inline(line.slice(3))}</h2>`;
+    } else if (/^\d+\.\s/.test(line)) {
+      // numbered list — keep as paragraph with inline <br> for simplicity
+      closeList();
+      html += `<p>${inline(line)}</p>`;
+    } else if (line.startsWith('- ')) {
+      if (!listOpen) {
+        html += '<ul>';
+        listOpen = true;
+      }
+      html += `<li>${inline(line.slice(2))}</li>`;
+    } else {
+      closeList();
+      html += `<p>${inline(line)}</p>`;
+    }
+  }
+  closeList();
+  return html;
+}
+
+const bodyHtml = renderMarkdown(service.longDescription);
+const categoryLabel = categoryLabels[service.category] ?? '';
+
+const description = `${service.shortDescription} Licensed Los Angeles plumber — call (310) 780-0362.`;
+---
+
+<ServiceLayout
+  title={`${service.title} · Sewer Pipe Pros`}
+  description={description}
+  slug={service.slug}
+  category={service.category}
+  icon={service.icon}
+  heading={service.title}
+  intro={service.shortDescription}
+>
+  <p class="svc-category-pill"><span>Category</span>{categoryLabel}</p>
+  <div set:html={bodyHtml} />
+</ServiceLayout>
+
+<style>
+  .svc-category-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.75rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .svc-category-pill span {
+    color: var(--red);
+  }
+</style>

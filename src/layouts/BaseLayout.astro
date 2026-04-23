@@ -1,0 +1,124 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = "Sewer Pipe Pros Inc. — Licensed Los Angeles plumbing, drain & sewer experts. Trenchless sewer repair, hydro-jetting, water heaters, and more. Call (310) 780-0362.",
+  ogImage,
+  canonical,
+  jsonLd,
+} = Astro.props;
+
+const pageTitle = title.includes('Sewer Pipe Pros')
+  ? title
+  : `${title} · Sewer Pipe Pros Inc.`;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonicalUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
+const ogImageUrl = ogImage ?? `${siteUrl}${base}/logo.png`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1a1c24" />
+    <meta name="color-scheme" content="light" />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="apple-touch-icon" href={`${base}/logo.png`} />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sewer Pipe Pros Inc." />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap"
+    />
+
+    <!-- Sitemap -->
+    <link rel="sitemap" href={`${base}/sitemap-index.xml`} />
+
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+
+    <!-- TODO: analytics/tracking scripts go here (Plausible, GA4, etc.) -->
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <slot />
+
+    <script>
+      // Scroll reveal — fades .reveal elements in as they enter the viewport.
+      const elements = document.querySelectorAll('.reveal');
+      if (elements.length > 0 && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+        );
+        elements.forEach((el) => io.observe(el));
+      } else {
+        elements.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+
+    <style>
+      .skip-link {
+        position: absolute;
+        left: 1rem;
+        top: -40px;
+        background: var(--ink);
+        color: #fff;
+        padding: 0.5rem 0.9rem;
+        border-radius: 6px;
+        z-index: 10000;
+        font-weight: 600;
+        transition: top 0.18s ease;
+      }
+      .skip-link:focus {
+        top: 1rem;
+        color: #fff;
+      }
+    </style>
+  </body>
+</html>

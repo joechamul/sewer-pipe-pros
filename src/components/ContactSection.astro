@@ -1,0 +1,132 @@
+---
+import Icon from './Icon.astro';
+import RequestForm from './RequestForm.astro';
+
+export interface Props {
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+}
+const {
+  eyebrow = 'Contact',
+  title = "Let's get your plumbing handled.",
+  lead = "Call us, or send a request and we'll reach back out. Emergencies? Call (310) 780-0362 — we answer 24/7.",
+} = Astro.props;
+---
+
+<section class="contact section" id="contact">
+  <div class="container contact__grid">
+    <div class="contact__info reveal">
+      <span class="eyebrow">{eyebrow}</span>
+      <h2 class="section-title">{title}</h2>
+      <p class="section-lead">{lead}</p>
+
+      <ul class="contact__blocks">
+        <li>
+          <span class="contact__block-icon" aria-hidden="true"><Icon name="phone" size={20} /></span>
+          <div>
+            <strong>Call Us</strong>
+            <a href="tel:+13107800362" class="contact__block-big">(310) 780-0362</a>
+            <span class="text-muted">24/7 for emergencies</span>
+          </div>
+        </li>
+        <li>
+          <span class="contact__block-icon" aria-hidden="true"><Icon name="map-pin" size={20} /></span>
+          <div>
+            <strong>Service Area</strong>
+            <span>Greater Los Angeles</span>
+            <span class="text-muted">Residential &amp; commercial</span>
+          </div>
+        </li>
+        <li>
+          <span class="contact__block-icon" aria-hidden="true"><Icon name="shield" size={20} /></span>
+          <div>
+            <strong>Licensed &amp; Insured</strong>
+            <span>Lic. #1126184</span>
+            <span class="text-muted">Classifications: C36 &amp; C42</span>
+          </div>
+        </li>
+        <li>
+          <span class="contact__block-icon" aria-hidden="true"><Icon name="star" size={20} /></span>
+          <div>
+            <strong>See Our Work</strong>
+            <a href="https://www.yelp.com/biz/sewer-pipe-pros-los-angeles" target="_blank" rel="noopener noreferrer">
+              Read reviews on Yelp →
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="contact__form reveal">
+      <RequestForm title="Request Service" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .contact__grid { grid-template-columns: 1fr; }
+  }
+
+  .contact__blocks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .contact__blocks li {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 0.9rem;
+    padding: 1.1rem 1.25rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    align-items: start;
+  }
+
+  .contact__block-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: #fff4f5;
+    color: var(--red);
+    flex-shrink: 0;
+  }
+
+  .contact__blocks strong {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+  }
+  .contact__blocks span { display: block; color: var(--ink); font-weight: 600; }
+  .contact__blocks span.text-muted { color: var(--muted); font-weight: 400; font-size: 0.9rem; }
+
+  .contact__block-big {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.6rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .contact__block-big:hover { color: var(--red); }
+</style>

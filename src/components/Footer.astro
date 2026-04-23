@@ -1,0 +1,198 @@
+---
+import Icon from './Icon.astro';
+import { services } from '../data/services';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const year = new Date().getFullYear();
+
+const core = services.filter((s) => s.category === 'sewer').slice(0, 6);
+const more = services.filter((s) => s.category !== 'sewer').slice(0, 6);
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <img
+        src={`${base}/logo.png`}
+        alt="Sewer Pipe Pros"
+        class="footer__logo-img"
+        width="260"
+        height="78"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="footer__brand-tag">We Serve Differently</div>
+      <p class="footer__blurb">
+        Honest, expert plumbing, drain, and sewer service for homes and businesses across Greater Los Angeles.
+      </p>
+      <div class="footer__license">
+        <Icon name="shield" size={16} />
+        <span>Lic. #1126184 · C36 &amp; C42</span>
+      </div>
+      <a href="tel:+13107800362" class="footer__call">
+        <Icon name="phone" size={18} /> (310) 780-0362
+      </a>
+    </div>
+
+    <div class="footer__col">
+      <h4 class="footer__heading">Core Services</h4>
+      <ul>
+        {core.map((s) => (
+          <li><a href={`${base}/services/${s.slug}/`}>{s.title}</a></li>
+        ))}
+        <li><a href={`${base}/services/`}>All services →</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h4 class="footer__heading">More Services</h4>
+      <ul>
+        {more.map((s) => (
+          <li><a href={`${base}/services/${s.slug}/`}>{s.title}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h4 class="footer__heading">Company</h4>
+      <ul>
+        <li><a href={`${base}/about/`}>About</a></li>
+        <li><a href={`${base}/areas/`}>Service Areas</a></li>
+        <li><a href={`${base}/contact/`}>Contact</a></li>
+        <li>
+          <a href="https://www.yelp.com/biz/sewer-pipe-pros-los-angeles" target="_blank" rel="noopener noreferrer">
+            Yelp Reviews
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="container footer__bottom-inner">
+      <p class="footer__copy">© {year} Sewer Pipe Pros Inc. All rights reserved.</p>
+      <p class="footer__slogan"><span class="text-red">We Serve Differently</span></p>
+      <p class="footer__category">Plumbing · Drains · Sewer</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ink);
+    color: #c9ccd6;
+    margin-top: auto;
+  }
+
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+    padding-block: clamp(3rem, 5vw, 4.5rem);
+  }
+
+  @media (max-width: 900px) {
+    .footer__inner { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .footer__inner { grid-template-columns: 1fr; }
+  }
+
+  .footer__logo-img {
+    height: 68px;
+    width: auto;
+    max-width: 100%;
+    display: block;
+    border-radius: 10px;
+    margin-bottom: 0.8rem;
+  }
+  .footer__brand-tag {
+    font-family: var(--font-display);
+    color: var(--red);
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .footer__blurb {
+    max-width: 36ch;
+    color: #a9adbb;
+    margin-bottom: 1rem;
+  }
+
+  .footer__license {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .footer__license :global(svg) { color: var(--cyan); }
+
+  .footer__call {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.06em;
+  }
+  .footer__call :global(svg) { color: var(--red); }
+  .footer__call:hover { color: var(--cyan); }
+
+  .footer__heading {
+    color: #fff;
+    font-size: 0.95rem;
+    letter-spacing: 0.16em;
+    margin-bottom: 1rem;
+  }
+
+  .footer__col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .footer__col a {
+    color: #b0b4c0;
+    font-size: 0.95rem;
+  }
+  .footer__col a:hover { color: var(--cyan); }
+
+  .footer__bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-block: 1.25rem;
+    background: #141620;
+  }
+  .footer__bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+  }
+  .footer__copy { margin: 0; color: #90939e; }
+  .footer__slogan {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .footer__category {
+    margin: 0;
+    font-family: var(--font-display);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #90939e;
+  }
+</style>

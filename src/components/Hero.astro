@@ -1,0 +1,134 @@
+---
+import Icon from './Icon.astro';
+import RequestForm from './RequestForm.astro';
+---
+
+<section class="hero">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__grid-bg" aria-hidden="true"></div>
+
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <span class="chip chip--live"><span class="dot" aria-hidden="true"></span> 24/7 Emergency Service Available</span>
+
+      <h1 class="hero__title">
+        LA's <span class="text-red">Licensed</span> Plumbing,<br />
+        Drain &amp; <span class="text-cyan">Sewer</span> Experts
+      </h1>
+
+      <p class="hero__sub">
+        Sewer Pipe Pros Inc. delivers honest, expert plumbing for homes and businesses across Los Angeles. From trenchless sewer repair to tankless water heaters — we serve differently.
+      </p>
+
+      <div class="hero__ctas">
+        <a class="btn btn--lg" href="tel:+13107800362">
+          <Icon name="phone" size={20} /> Call Now · (310) 780-0362
+        </a>
+        <a class="btn btn--ghost btn--lg" href="#request-form">Request Service</a>
+      </div>
+
+      <ul class="hero__checks">
+        <li><Icon name="check" size={18} /> Licensed &amp; Insured</li>
+        <li><Icon name="check" size={18} /> Residential &amp; Commercial</li>
+        <li><Icon name="check" size={18} /> Upfront Honest Pricing</li>
+        <li><Icon name="check" size={18} /> Same-Day Service</li>
+      </ul>
+    </div>
+
+    <div class="hero__form" id="request-form">
+      <RequestForm />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    background: var(--ink);
+    padding-block: clamp(3rem, 6vw, 5.5rem);
+    isolation: isolate;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 45% at 85% 10%, rgba(63, 194, 238, 0.30), transparent 60%),
+      radial-gradient(ellipse 55% 50% at 10% 110%, rgba(229, 32, 42, 0.35), transparent 55%),
+      radial-gradient(ellipse 80% 60% at 50% 110%, rgba(15, 61, 122, 0.45), transparent 70%),
+      linear-gradient(180deg, #15171f 0%, #1a1c24 60%, #141620 100%);
+    z-index: -1;
+  }
+
+  .hero__grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 55% at 50% 40%, black 40%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 40%, black 40%, transparent 80%);
+    opacity: 0.5;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  @media (max-width: 980px) {
+    .hero__inner { grid-template-columns: 1fr; }
+  }
+
+  .hero__title {
+    color: #fff;
+    margin: 1rem 0 1.25rem;
+    font-weight: 900;
+  }
+
+  .hero__sub {
+    font-size: clamp(1rem, 0.6vw + 0.9rem, 1.2rem);
+    color: #c9ccd6;
+    max-width: 55ch;
+    margin-bottom: 1.75rem;
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero__checks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, auto));
+    gap: 0.7rem 1.5rem;
+    color: #e5e7ec;
+  }
+  @media (max-width: 520px) {
+    .hero__checks { grid-template-columns: 1fr; }
+  }
+  .hero__checks li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+  }
+  .hero__checks :global(svg) {
+    color: var(--cyan);
+    flex-shrink: 0;
+  }
+
+  .hero__form { position: relative; }
+</style>

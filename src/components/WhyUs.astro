@@ -1,0 +1,126 @@
+---
+import Icon from './Icon.astro';
+
+const reasons = [
+  {
+    n: '01',
+    icon: 'shield',
+    title: 'Licensed & Accountable',
+    body: 'Lic. #1126184 with both a C36 plumbing license and a C42 sanitation license — your job is done to code, by techs who stand behind their work.',
+  },
+  {
+    n: '02',
+    icon: 'dollar',
+    title: 'Honest Upfront Pricing',
+    body: 'Flat-rate quotes approved before any tools come out. No hourly creep, no mystery upsells, no vague change orders at the end.',
+  },
+  {
+    n: '03',
+    icon: 'truck',
+    title: 'Fast, Respectful Service',
+    body: 'Same-day response on most calls. Our techs show up on time, wear shoe covers, lay drop cloths, and leave the site cleaner than we found it.',
+  },
+  {
+    n: '04',
+    icon: 'tools',
+    title: 'Full-Service Plumbing',
+    body: 'From a dripping faucet to a full trenchless sewer replacement — one team, one warranty, no hand-offs to a subcontractor.',
+  },
+  {
+    n: '05',
+    icon: 'camera',
+    title: 'Modern Technology',
+    body: 'HD sewer cameras, hydro-jetters, pipe locators, electronic leak detection — we invest in the tools that actually solve problems, not just find them.',
+  },
+  {
+    n: '06',
+    icon: 'building',
+    title: 'Residential & Commercial',
+    body: 'Single-family, condo, ADU, multifamily, restaurants, retail — we scope the work to the property type and code requirements.',
+  },
+];
+---
+
+<section class="why section">
+  <div class="container">
+    <header class="text-center">
+      <span class="eyebrow eyebrow--center">Why Us</span>
+      <h2 class="section-title" style="margin-inline:auto;">The difference is in how we work.</h2>
+      <p class="section-lead" style="margin-inline:auto;">Six things every Sewer Pipe Pros customer can count on — whether you're calling us for a slow drain or a full repipe.</p>
+    </header>
+
+    <div class="why__grid">
+      {reasons.map((r) => (
+        <article class="why__card reveal">
+          <span class="why__num">{r.n}</span>
+          <span class="why__icon" aria-hidden="true"><Icon name={r.icon} size={24} /></span>
+          <h3 class="why__title">{r.title}</h3>
+          <p class="why__body">{r.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .why { background: var(--paper); }
+
+  .why__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 960px) { .why__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .why__grid { grid-template-columns: 1fr; } }
+
+  .why__card {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 1.75rem 1.5rem 1.5rem;
+    transition: transform var(--t-med), box-shadow var(--t-med);
+  }
+  .why__card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .why__num {
+    position: absolute;
+    top: 0.75rem;
+    right: 1.25rem;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 3.25rem;
+    color: var(--line);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    pointer-events: none;
+  }
+
+  .why__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: #fff4f5;
+    color: var(--red);
+    margin-bottom: 1rem;
+  }
+
+  .why__title {
+    font-size: 1.2rem;
+    margin: 0 0 0.4rem;
+  }
+
+  .why__body {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+import Icon from './Icon.astro';
+---
+
+<a href="tel:+13107800362" class="sticky-call" aria-label="Call Sewer Pipe Pros at (310) 780-0362">
+  <span class="sticky-call__dot" aria-hidden="true"></span>
+  <Icon name="phone" size={20} />
+  <span class="sticky-call__text">Tap to Call · (310) 780-0362</span>
+</a>
+
+<style>
+  .sticky-call {
+    display: none;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 90;
+    background: var(--red);
+    color: #fff;
+    padding: 0.85rem 1rem calc(0.85rem + env(safe-area-inset-bottom));
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 1rem;
+    box-shadow: 0 -8px 24px rgba(229,32,42,0.35);
+    border-top: 2px solid var(--red-dark);
+  }
+  .sticky-call:hover { color: #fff; background: var(--red-dark); }
+
+  .sticky-call__dot {
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: #fff;
+    animation: stickyPulse 1.4s ease-out infinite;
+  }
+
+  @keyframes stickyPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.6); }
+    70%  { box-shadow: 0 0 0 10px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+  }
+
+  @media (max-width: 560px) {
+    .sticky-call { display: inline-flex; }
+    :global(body) { padding-bottom: 64px; } /* space for sticky */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sticky-call__dot { animation: none; }
+  }
+</style>

@@ -1,0 +1,303 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TopStrip from '../components/TopStrip.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyCall from '../components/StickyCall.astro';
+import RequestForm from '../components/RequestForm.astro';
+import Icon from '../components/Icon.astro';
+import { services } from '../data/services';
+
+export interface Props {
+  title: string;
+  description?: string;
+  slug: string;
+  category: string;
+  icon: string;
+  heading: string;
+  intro: string;
+}
+
+const { title, description, slug, category, icon, heading, intro } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const related = services
+  .filter((s) => s.category === category && s.slug !== slug)
+  .slice(0, 6);
+---
+
+<BaseLayout title={title} description={description}>
+  <TopStrip />
+  <Header />
+
+  <main id="main">
+    <!-- Service hero -->
+    <section class="svc-hero">
+      <div class="container svc-hero__inner">
+        <nav class="svc-hero__crumbs" aria-label="Breadcrumb">
+          <a href={`${base}/`}>Home</a>
+          <span aria-hidden="true">/</span>
+          <a href={`${base}/services/`}>Services</a>
+          <span aria-hidden="true">/</span>
+          <span>{heading}</span>
+        </nav>
+        <div class="svc-hero__icon" aria-hidden="true">
+          <Icon name={icon} />
+        </div>
+        <h1 class="svc-hero__title reveal">{heading}</h1>
+        <p class="svc-hero__lead reveal">{intro}</p>
+        <div class="svc-hero__ctas reveal">
+          <a class="btn" href="tel:+13107800362">
+            <Icon name="phone" size={20} />
+            (310) 780-0362
+          </a>
+          <a class="btn btn--ghost-dark" href="#request">Request Service</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Long body + aside -->
+    <section class="section svc-body">
+      <div class="container svc-body__grid">
+        <article class="svc-body__article reveal">
+          <slot />
+        </article>
+
+        <aside class="svc-aside reveal">
+          <div class="svc-aside__card">
+            <span class="eyebrow">Also offered</span>
+            <h3>Related Services</h3>
+            {related.length === 0 ? (
+              <p class="text-muted">See our full list of plumbing services.</p>
+            ) : (
+              <ul class="svc-aside__list">
+                {related.map((s) => (
+                  <li>
+                    <a href={`${base}/services/${s.slug}/`}>
+                      <Icon name={s.icon} size={18} />
+                      <span>{s.title}</span>
+                      <span class="arrow" aria-hidden="true">→</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <a class="btn btn--ghost-dark btn--block" href={`${base}/services/`} style="margin-top:1rem">
+              View All Services
+            </a>
+          </div>
+
+          <div class="svc-aside__card svc-aside__card--dark">
+            <span class="eyebrow">Need it today?</span>
+            <h3>24/7 emergency<br />service available</h3>
+            <p>Burst pipe, sewer backup, no hot water — call now and we'll dispatch a licensed tech.</p>
+            <a class="btn btn--block" href="tel:+13107800362">
+              <Icon name="phone" size={20} />
+              (310) 780-0362
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Request form -->
+    <section class="section section-dark" id="request">
+      <div class="container">
+        <div class="svc-request">
+          <div class="svc-request__copy">
+            <span class="eyebrow">Request Service</span>
+            <h2>Tell us what's going on.</h2>
+            <p>We serve differently — honest diagnosis, upfront pricing, and respectful service from a licensed local team.</p>
+            <ul class="svc-request__points">
+              <li><Icon name="check" size={18} /> Licensed (Lic. #1126184 · C36 &amp; C42)</li>
+              <li><Icon name="check" size={18} /> Residential &amp; Commercial</li>
+              <li><Icon name="check" size={18} /> Same-Day Availability</li>
+            </ul>
+          </div>
+          <div class="svc-request__form">
+            <RequestForm defaultService={slug} compact />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <StickyCall />
+</BaseLayout>
+
+<style>
+  .svc-hero {
+    position: relative;
+    background:
+      radial-gradient(ellipse at top right, rgba(63, 194, 238, 0.18), transparent 55%),
+      radial-gradient(ellipse at bottom left, rgba(229, 32, 42, 0.22), transparent 55%),
+      var(--ink);
+    color: #fff;
+    padding-block: clamp(4rem, 7vw, 6.5rem);
+    overflow: hidden;
+  }
+
+  .svc-hero__inner { max-width: 920px; }
+
+  .svc-hero__crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+  .svc-hero__crumbs a { color: var(--cyan); }
+  .svc-hero__crumbs a:hover { color: #fff; }
+
+  .svc-hero__icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--red), var(--red-dark));
+    display: grid;
+    place-items: center;
+    color: #fff;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 10px 30px rgba(229,32,42,0.35);
+  }
+  .svc-hero__icon :global(svg) { width: 36px; height: 36px; }
+
+  .svc-hero__title {
+    color: #fff;
+    max-width: 20ch;
+  }
+
+  .svc-hero__lead {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.82);
+    max-width: 60ch;
+    margin-bottom: 2rem;
+  }
+
+  .svc-hero__ctas { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+  .svc-hero__ctas .btn--ghost-dark {
+    --btn-text: #fff;
+    border-color: rgba(255,255,255,0.45);
+  }
+  .svc-hero__ctas .btn--ghost-dark:hover {
+    background: #fff;
+    color: var(--ink);
+  }
+
+  .svc-body__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  @media (max-width: 960px) {
+    .svc-body__grid { grid-template-columns: 1fr; }
+  }
+
+  .svc-body__article :global(h2) {
+    font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+    margin-top: 2rem;
+    border-left: 4px solid var(--red);
+    padding-left: 0.8rem;
+  }
+  .svc-body__article :global(h3) {
+    margin-top: 1.75rem;
+  }
+  .svc-body__article :global(p) {
+    font-size: 1.05rem;
+    color: #3a3f4c;
+  }
+  .svc-body__article :global(ul) {
+    padding-left: 1.25rem;
+  }
+  .svc-body__article :global(li) {
+    margin-bottom: 0.35rem;
+  }
+
+  .svc-aside { display: grid; gap: 1rem; position: sticky; top: 1rem; }
+  @media (max-width: 960px) {
+    .svc-aside { position: static; }
+  }
+
+  .svc-aside__card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .svc-aside__card--dark {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink-3);
+  }
+  .svc-aside__card--dark :global(h3) { color: #fff; }
+  .svc-aside__card--dark p { color: #c9ccd6; }
+
+  .svc-aside__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.2rem;
+  }
+  .svc-aside__list a {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    color: var(--ink);
+    transition: background var(--t-fast), color var(--t-fast);
+  }
+  .svc-aside__list a:hover { background: var(--paper); color: var(--red); }
+  .svc-aside__list .arrow { margin-left: auto; color: var(--muted); }
+  .svc-aside__list a:hover .arrow { color: var(--red); }
+
+  .svc-request {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  @media (max-width: 860px) {
+    .svc-request { grid-template-columns: 1fr; }
+  }
+
+  .svc-request__points {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .svc-request__points li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #c9ccd6;
+  }
+  .svc-request__points :global(svg) { color: var(--cyan); flex-shrink: 0; }
+
+  .svc-request__form { background: #fff; color: var(--ink); padding: 1.75rem; border-radius: var(--r-lg); box-shadow: var(--shadow-lg); border-top: 4px solid var(--red); position: relative; }
+  .svc-request__form::before {
+    content: '';
+    position: absolute;
+    inset: -1px 0 auto 0;
+    height: 4px;
+    background: var(--cyan);
+    top: 4px;
+    border-radius: 2px;
+    margin-inline: 2rem;
+  }
+</style>

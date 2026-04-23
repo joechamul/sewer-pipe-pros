@@ -1,0 +1,73 @@
+---
+import Icon from './Icon.astro';
+
+const items = [
+  { icon: 'shield', title: 'Licensed', text: 'Lic. #1126184 · C36 & C42' },
+  { icon: 'clock', title: '24/7', text: 'Emergency response' },
+  { icon: 'dollar', title: 'Upfront', text: 'Flat-rate pricing' },
+  { icon: 'users', title: 'Local', text: 'Serving Greater LA' },
+  { icon: 'star', title: 'Yelp Reviewed', text: 'Real local reviews' },
+];
+---
+
+<section class="trust-bar" aria-label="Why homeowners trust us">
+  <div class="container-wide trust-bar__inner">
+    {items.map((item) => (
+      <div class="trust-bar__item">
+        <span class="trust-bar__icon" aria-hidden="true"><Icon name={item.icon} size={22} /></span>
+        <span class="trust-bar__text">
+          <strong>{item.title}</strong>
+          <span>{item.text}</span>
+        </span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .trust-bar {
+    background: #fff;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .trust-bar__inner {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    padding-block: 1.25rem;
+  }
+  @media (max-width: 900px) {
+    .trust-bar__inner { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .trust-bar__inner { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  }
+
+  .trust-bar__item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .trust-bar__icon {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: #fff4f5;
+    color: var(--red);
+    flex-shrink: 0;
+  }
+  .trust-bar__text { display: grid; line-height: 1.2; }
+  .trust-bar__text strong {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+  .trust-bar__text span {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+</style>

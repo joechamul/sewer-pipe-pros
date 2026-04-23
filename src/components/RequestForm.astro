@@ -1,0 +1,193 @@
+---
+import { services } from '../data/services';
+
+export interface Props {
+  defaultService?: string;
+  compact?: boolean;
+  title?: string;
+}
+
+const { defaultService = '', compact = false, title = "Request Service" } = Astro.props;
+
+const grouped: Record<string, typeof services> = {};
+for (const s of services) {
+  if (!grouped[s.category]) grouped[s.category] = [] as any;
+  (grouped[s.category] as any).push(s);
+}
+
+const categoryLabels: Record<string, string> = {
+  sewer: 'Sewer & Drain',
+  water: 'Water & Heaters',
+  pipe: 'Piping & Gas',
+  fixture: 'Fixtures & Appliances',
+};
+
+const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
+---
+
+<div class:list={['request-card', { 'request-card--compact': compact }]}>
+  {!compact && (
+    <div class="request-card__header">
+      <span class="eyebrow">{title}</span>
+      <h3>Tell us what you need.</h3>
+      <p class="request-card__lead">We'll call you back with honest, upfront pricing.</p>
+    </div>
+  )}
+
+  <form class="form" data-request-form novalidate>
+    <div class="form__row">
+      <div>
+        <label for="rf-name">Full Name</label>
+        <input id="rf-name" name="name" type="text" autocomplete="name" required placeholder="Robert Manuel" />
+      </div>
+      <div>
+        <label for="rf-phone">Phone</label>
+        <input id="rf-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required placeholder="(310) 555-0000" />
+      </div>
+    </div>
+
+    <div class="form__row">
+      <div>
+        <label for="rf-email">Email</label>
+        <input id="rf-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
+      </div>
+      <div>
+        <label for="rf-address">Address / ZIP</label>
+        <input id="rf-address" name="address" type="text" autocomplete="street-address" required placeholder="Street or ZIP" />
+      </div>
+    </div>
+
+    <div>
+      <label for="rf-service">Service Needed</label>
+      <select id="rf-service" name="service" required>
+        <option value="">Select a service…</option>
+        {categoryOrder.map((cat) => (
+          <optgroup label={categoryLabels[cat]}>
+            {grouped[cat]?.map((s) => (
+              <option value={s.slug} selected={s.slug === defaultService}>{s.title}</option>
+            ))}
+          </optgroup>
+        ))}
+        <option value="other">Not sure — please help me diagnose</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="rf-message">Tell us what's going on</label>
+      <textarea id="rf-message" name="message" rows="4" placeholder="Describe the issue, when it started, any signs like smell or backup…"></textarea>
+    </div>
+
+    <p class="form__error" data-error aria-live="polite"></p>
+
+    <button type="submit" class="btn btn--block btn--lg" data-submit>
+      Request Service Call →
+    </button>
+
+    <p class="form__hint">
+      Or call us directly at <a href="tel:+13107800362">(310)&nbsp;780-0362</a>
+    </p>
+  </form>
+</div>
+
+<script>
+  // Client-side validation. Replace the alert with a real submit handler once
+  // a backend is chosen.
+  // TODO: wire this up to Formspree / Web3Forms / Netlify Forms / your SMTP gateway.
+  //   Example (Formspree):
+  //     form.action = "https://formspree.io/f/YOUR_ID";
+  //     form.method = "POST";
+  //   Then remove the preventDefault + alert block below and allow normal submit.
+
+  document.querySelectorAll<HTMLFormElement>('[data-request-form]').forEach((form) => {
+    const errEl = form.querySelector<HTMLElement>('[data-error]');
+    const submitBtn = form.querySelector<HTMLButtonElement>('[data-submit]');
+
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      if (!errEl || !submitBtn) return;
+      errEl.textContent = '';
+
+      const data = new FormData(form);
+      const name = String(data.get('name') || '').trim();
+      const phone = String(data.get('phone') || '').trim();
+      const email = String(data.get('email') || '').trim();
+      const address = String(data.get('address') || '').trim();
+      const service = String(data.get('service') || '').trim();
+
+      if (!name || name.length < 2) {
+        errEl.textContent = 'Please enter your name.';
+        (form.elements.namedItem('name') as HTMLInputElement)?.focus();
+        return;
+      }
+      if (!/^[\d\s()+\-.]{10,}$/.test(phone)) {
+        errEl.textContent = 'Please enter a valid phone number.';
+        (form.elements.namedItem('phone') as HTMLInputElement)?.focus();
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errEl.textContent = 'Please enter a valid email address.';
+        (form.elements.namedItem('email') as HTMLInputElement)?.focus();
+        return;
+      }
+      if (!address) {
+        errEl.textContent = 'Please enter your address or ZIP code.';
+        (form.elements.namedItem('address') as HTMLInputElement)?.focus();
+        return;
+      }
+      if (!service) {
+        errEl.textContent = 'Please choose a service.';
+        (form.elements.namedItem('service') as HTMLSelectElement)?.focus();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      // TODO: replace this confirmation alert with a real network request.
+      setTimeout(() => {
+        alert(
+          `Thanks, ${name}! We received your request for ${service}.\n` +
+          `We'll call you at ${phone} shortly.\n\n` +
+          `For emergencies, call us directly at (310) 780-0362.`
+        );
+        form.reset();
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Request Service Call →';
+      }, 500);
+    });
+  });
+</script>
+
+<style>
+  .request-card {
+    background: #fff;
+    border-radius: var(--r-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-lg);
+    border-top: 4px solid var(--red);
+    position: relative;
+  }
+  .request-card::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 1.75rem;
+    right: 1.75rem;
+    height: 4px;
+    background: var(--cyan);
+    border-radius: 2px;
+  }
+
+  .request-card--compact { padding: 1.25rem; }
+
+  .request-card__header { margin-bottom: 1rem; }
+  .request-card__header h3 {
+    font-size: 1.7rem;
+    margin-bottom: 0.25rem;
+    color: var(--ink);
+  }
+  .request-card__lead {
+    color: var(--muted);
+    margin: 0 0 1rem;
+  }
+</style>
