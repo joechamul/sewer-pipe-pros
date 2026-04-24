@@ -1,0 +1,571 @@
+---
+import Icon from './Icon.astro';
+import { reviews } from '../data/reviews';
+
+// ─── Yelp summary (edit these to match the current Yelp page) ───
+const yelpRating = 5.0;
+const yelpCount = 30;
+const yelpUrl = 'https://www.yelp.com/biz/sewer-pipe-pros-los-angeles';
+
+const filledStars = Math.round(yelpRating);
+
+const dateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' });
+const longDateFmt = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const formatDate = (iso: string) => dateFmt.format(new Date(iso));
+const formatLongDate = (iso: string) => longDateFmt.format(new Date(iso));
+
+// Most recent review = highest date. Remaining reviews fill the grid below.
+const sorted = [...reviews].sort((a, b) => b.date.localeCompare(a.date));
+const featured = sorted[0];
+const rest = sorted.slice(1);
+---
+
+<section class="reviews section">
+  <div class="container">
+    <header class="reviews__header">
+      <span class="eyebrow">Customer Reviews</span>
+      <h2 class="section-title">What Los Angeles says about us.</h2>
+      <p class="section-lead">
+        We live and die by word of mouth. Every review below is a real homeowner — vetted and filtered by Yelp, not us.
+      </p>
+    </header>
+
+    <div class="reviews__stage">
+      <!-- Rating moment -->
+      <aside class="reviews__score reveal">
+        <div class="reviews__score-top">
+          <svg class="reviews__yelp-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+            <path fill="currentColor" d="M12.5 3c.8 0 1.5.6 1.5 1.4v10.4c0 1.1-1.2 1.8-2.2 1.3L6.9 13.7c-.9-.5-1.1-1.7-.4-2.5L11 4.7c.4-.5 1-.9 1.6-.9zM6.3 17.9l4.4-.7c1.1-.2 2 .9 1.6 2l-1.9 4.2c-.4.9-1.6 1.1-2.3.4L4.7 20c-.8-.8-.5-2 .5-2.2l1.1.1zM16.9 17.4l3.7 2.6c.9.7.8 2 0 2.6L17 25.4c-.8.7-2 .1-2-1v-4.7c-.1-1 1-1.8 1.9-1.3zM20.8 14.8l-3.6 1.4c-1 .4-2-.5-1.8-1.6l1-5c.2-1 1.4-1.5 2.3-.8l3 2.4c.8.7.6 2-.3 2.4l-.6.2zM18.5 7.3l-2.6 2.2c-.9.8-2.2.1-2.1-1l.2-4.1c0-1 1.1-1.6 2-1.2l2.8 1.6c.9.5 1 1.7.3 2.4l-.6.1z"/>
+          </svg>
+          <span class="reviews__score-label">Rated on Yelp</span>
+        </div>
+
+        <div class="reviews__score-value" aria-label={`${yelpRating} out of 5 stars`}>
+          <span class="reviews__score-number">{yelpRating.toFixed(1)}</span>
+          <span class="reviews__score-of">/5</span>
+        </div>
+
+        <div class="reviews__stars" aria-hidden="true">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Icon name="star" size={26} class={i < filledStars ? 'is-filled' : 'is-empty'} />
+          ))}
+        </div>
+
+        <p class="reviews__score-sub">
+          Based on <strong>{yelpCount}+</strong> verified Yelp reviews across Greater LA.
+        </p>
+
+        <a href={yelpUrl} target="_blank" rel="noopener" class="btn btn--cyan reviews__cta">
+          <Icon name="yelp" size={18} /> Read every review on Yelp
+        </a>
+      </aside>
+
+      <!-- Featured (most recent) review -->
+      <figure class="reviews__featured reveal">
+        <div class="reviews__featured-frame">
+          <div class="reviews__featured-top">
+            <span class="reviews__featured-badge">
+              <span class="reviews__featured-pulse" aria-hidden="true"></span>
+              Most Recent Review
+            </span>
+            <div class="reviews__featured-stars" aria-label={`${featured.stars} out of 5 stars`}>
+              {Array.from({ length: 5 }).map((_, s) => (
+                <Icon name="star" size={18} class={s < featured.stars ? 'rev-star rev-star--on' : 'rev-star'} />
+              ))}
+            </div>
+          </div>
+
+          <span class="reviews__featured-mark" aria-hidden="true">"</span>
+
+          <blockquote class="reviews__featured-body">
+            {featured.body}
+          </blockquote>
+
+          <figcaption class="reviews__featured-foot">
+            <span class="reviews__featured-avatar" aria-hidden="true">{featured.name.charAt(0)}</span>
+            <div class="reviews__featured-meta">
+              <strong>{featured.name}</strong>
+              <span>
+                {featured.location}
+                <span class="reviews__featured-dot" aria-hidden="true">·</span>
+                {formatLongDate(featured.date)}
+              </span>
+            </div>
+            <span class="reviews__featured-service">{featured.service}</span>
+          </figcaption>
+        </div>
+      </figure>
+    </div>
+
+    <!-- Review cards -->
+    <ul class="reviews__grid">
+      {rest.map((r, i) => (
+        <li class="reviews__card reveal" style={`--delay:${i * 80}ms`}>
+          <div class="reviews__card-head">
+            <div class="reviews__card-stars" aria-label={`${r.stars} out of 5 stars`}>
+              {Array.from({ length: 5 }).map((_, s) => (
+                <Icon name="star" size={16} class={s < r.stars ? 'rev-star rev-star--on' : 'rev-star'} />
+              ))}
+            </div>
+            <span class="reviews__card-date">{formatDate(r.date)}</span>
+          </div>
+          <p class="reviews__card-body">
+            <span class="reviews__card-mark" aria-hidden="true">"</span>{r.body}
+          </p>
+          <footer class="reviews__card-foot">
+            <div class="reviews__card-who">
+              <span class="reviews__card-avatar" aria-hidden="true">{r.name.charAt(0)}</span>
+              <div>
+                <strong>{r.name}</strong>
+                <span>{r.location}</span>
+              </div>
+            </div>
+            <span class="reviews__card-service">{r.service}</span>
+          </footer>
+        </li>
+      ))}
+    </ul>
+
+    <p class="reviews__footnote">
+      Reviews published on Yelp. See all {yelpCount}+ at
+      <a href={yelpUrl} target="_blank" rel="noopener">yelp.com/biz/sewer-pipe-pros-los-angeles →</a>
+    </p>
+  </div>
+
+  <div class="reviews__decor" aria-hidden="true"></div>
+</section>
+
+<style>
+  .reviews {
+    position: relative;
+    background: var(--paper);
+    overflow: hidden;
+  }
+  .reviews__decor {
+    position: absolute;
+    inset: auto -10% -40% auto;
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle at center, rgba(229, 32, 42, 0.08), transparent 65%);
+    pointer-events: none;
+  }
+
+  .reviews__header {
+    max-width: 62ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .reviews__stage {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+  @media (max-width: 900px) {
+    .reviews__stage { grid-template-columns: 1fr; }
+  }
+
+  /* ─── Score panel ──────────────────────────────────────── */
+  .reviews__score {
+    position: relative;
+    background: var(--ink);
+    color: #fff;
+    padding: 2rem 1.75rem;
+    border-radius: var(--radius-card);
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+  }
+  .reviews__score::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 100% 0%, rgba(63, 194, 238, 0.18), transparent 55%),
+      radial-gradient(ellipse at 0% 100%, rgba(229, 32, 42, 0.20), transparent 55%);
+    pointer-events: none;
+  }
+  .reviews__score > * { position: relative; z-index: 1; }
+
+  .reviews__score-top {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #e63946;
+  }
+  .reviews__yelp-mark { color: #d32323; }
+  .reviews__score-label {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.72);
+  }
+
+  .reviews__score-value {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    font-family: var(--font-display);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-block: 0.1rem 0.2rem;
+  }
+  .reviews__score-number {
+    font-size: clamp(4rem, 9vw, 6rem);
+    background: linear-gradient(180deg, #fff 0%, #d2d5df 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .reviews__score-of {
+    font-size: 1.6rem;
+    color: rgba(255,255,255,0.45);
+    font-weight: 700;
+  }
+
+  .reviews__stars {
+    display: inline-flex;
+    gap: 0.2rem;
+  }
+  .reviews__stars :global(.is-filled) {
+    color: var(--cyan);
+    fill: var(--cyan);
+  }
+  .reviews__stars :global(.is-empty) {
+    color: rgba(255,255,255,0.2);
+  }
+
+  .reviews__score-sub {
+    color: rgba(255,255,255,0.82);
+    font-size: 0.95rem;
+    margin: 0.25rem 0 0.6rem;
+    line-height: 1.5;
+  }
+  .reviews__score-sub strong { color: #fff; }
+
+  .reviews__cta {
+    align-self: flex-start;
+    margin-top: auto;
+  }
+
+  /* ─── Featured (most recent) review ─────────────────────── */
+  .reviews__featured {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+  }
+  .reviews__featured-frame {
+    flex: 1;
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 2.25rem 2.25rem 1.75rem;
+    box-shadow: var(--shadow-sm);
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    overflow: hidden;
+  }
+  .reviews__featured-frame::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 5px; height: 100%;
+    background: linear-gradient(180deg, var(--red), var(--cyan));
+  }
+
+  .reviews__featured-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .reviews__featured-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    color: var(--red);
+    padding: 0.35rem 0.7rem 0.35rem 0.6rem;
+    background: #fff4f5;
+    border: 1px solid rgba(229, 32, 42, 0.2);
+    border-radius: 999px;
+  }
+  .reviews__featured-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--red);
+    box-shadow: 0 0 0 0 rgba(229, 32, 42, 0.55);
+    animation: reviews-pulse 2s ease-out infinite;
+  }
+  @keyframes reviews-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(229, 32, 42, 0.55); }
+    70%  { box-shadow: 0 0 0 10px rgba(229, 32, 42, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(229, 32, 42, 0); }
+  }
+  .reviews__featured-stars { display: inline-flex; gap: 0.15rem; }
+  .reviews__featured-stars :global(.rev-star) { color: var(--line); }
+  .reviews__featured-stars :global(.rev-star--on) {
+    color: #e63946;
+    fill: #e63946;
+  }
+
+  .reviews__featured-mark {
+    position: absolute;
+    top: -1.25rem;
+    right: 1rem;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 14rem;
+    line-height: 1;
+    color: rgba(229, 32, 42, 0.07);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .reviews__featured-body {
+    position: relative;
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.15rem, 1.9vw, 1.4rem);
+    line-height: 1.45;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    max-width: 46ch;
+    white-space: pre-line;
+  }
+
+  .reviews__featured-foot {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+  .reviews__featured-avatar {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+  }
+  .reviews__featured-meta {
+    display: grid;
+    line-height: 1.25;
+    min-width: 0;
+  }
+  .reviews__featured-meta strong {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .reviews__featured-meta span {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .reviews__featured-dot { margin-inline: 0.35rem; }
+  .reviews__featured-service {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    text-align: right;
+    max-width: 10rem;
+    line-height: 1.25;
+  }
+
+  @media (max-width: 900px) {
+    .reviews__featured-mark { font-size: 10rem; top: -0.75rem; }
+  }
+  @media (max-width: 560px) {
+    .reviews__score { padding: 1.5rem 1.25rem; }
+    .reviews__featured-frame { padding: 1.75rem 1.25rem 1.25rem; min-height: 260px; }
+    .reviews__featured-mark { font-size: 8rem; top: -0.5rem; right: 0.5rem; }
+    .reviews__featured-foot { grid-template-columns: auto 1fr; }
+    .reviews__featured-service { grid-column: 1 / -1; text-align: left; max-width: none; padding-top: 0.25rem; }
+  }
+
+  /* ─── Review cards grid ─────────────────────────────────── */
+  .reviews__grid {
+    list-style: none;
+    padding: 0;
+    margin: 3rem 0 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 780px) { .reviews__grid { grid-template-columns: 1fr; } }
+
+  .reviews__card {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 1.75rem 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition-delay: var(--delay, 0ms);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), box-shadow var(--t-med), border-color var(--t-med);
+    overflow: hidden;
+  }
+  .reviews__card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--red) 0%, var(--red) 60%, var(--cyan) 100%);
+    opacity: 0;
+    transition: opacity var(--t-med);
+  }
+  .reviews__card:hover {
+    border-color: transparent;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .reviews__card:hover::before { opacity: 1; }
+
+  .reviews__card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px dashed var(--line);
+  }
+  .reviews__card-stars {
+    display: inline-flex;
+    gap: 0.1rem;
+  }
+  .reviews__card-stars :global(.rev-star) { color: var(--line); }
+  .reviews__card-stars :global(.rev-star--on) {
+    color: #e63946;
+    fill: #e63946;
+  }
+  .reviews__card-date {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .reviews__card-body {
+    position: relative;
+    margin: 0;
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.65;
+    font-family: var(--font-body);
+  }
+  .reviews__card-mark {
+    font-family: var(--font-display);
+    font-weight: 900;
+    color: var(--red);
+    font-size: 1.6rem;
+    line-height: 0;
+    vertical-align: -0.45em;
+    margin-right: 0.2rem;
+  }
+
+  .reviews__card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--line);
+  }
+  .reviews__card-who {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-width: 0;
+  }
+  .reviews__card-avatar {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+  .reviews__card-who > div {
+    display: grid;
+    line-height: 1.2;
+    min-width: 0;
+  }
+  .reviews__card-who strong {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .reviews__card-who span {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .reviews__card-service {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    text-align: right;
+    max-width: 40%;
+    line-height: 1.25;
+  }
+  .section-dark .reviews__card-service { color: var(--cyan); }
+
+  .reviews__footnote {
+    margin: 0.5rem 0 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+  .reviews__footnote a {
+    color: var(--red);
+    font-weight: 700;
+    border-bottom: 1px solid currentColor;
+  }
+  .reviews__footnote a:hover { color: var(--red-dark); }
+</style>

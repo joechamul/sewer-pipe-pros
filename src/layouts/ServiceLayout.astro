@@ -1,6 +1,5 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import TopStrip from '../components/TopStrip.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyCall from '../components/StickyCall.astro';
@@ -27,7 +26,6 @@ const related = services
 ---
 
 <BaseLayout title={title} description={description}>
-  <TopStrip />
   <Header />
 
   <main id="main">
