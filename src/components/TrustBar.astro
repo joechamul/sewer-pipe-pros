@@ -3,10 +3,9 @@ import Icon from './Icon.astro';
 
 const items = [
   { icon: 'shield', title: 'Licensed', text: 'Lic. #1126184 · C36 & C42' },
-  { icon: 'clock', title: '24/7', text: 'Emergency response' },
+  { icon: 'badge', title: 'Insured & Bonded', text: 'Full coverage on every job' },
   { icon: 'dollar', title: 'Upfront', text: 'Flat-rate pricing' },
   { icon: 'users', title: 'Local', text: 'Serving Greater LA' },
-  { icon: 'star', title: 'Yelp Reviewed', text: 'Real local reviews' },
 ];
 ---
 
@@ -32,8 +31,8 @@ const items = [
   }
   .trust-bar__inner {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
     padding-block: 1.25rem;
   }
   @media (max-width: 900px) {

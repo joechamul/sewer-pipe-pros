@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import TopStrip from '../components/TopStrip.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyCall from '../components/StickyCall.astro';
@@ -10,6 +9,7 @@ import AboutSection from '../components/AboutSection.astro';
 import ServicesGrid from '../components/ServicesGrid.astro';
 import EmergencyBanner from '../components/EmergencyBanner.astro';
 import WhyUs from '../components/WhyUs.astro';
+import Reviews from '../components/Reviews.astro';
 import ServiceAreas from '../components/ServiceAreas.astro';
 import ContactSection from '../components/ContactSection.astro';
 import { areas } from '../data/areas';
@@ -71,17 +71,17 @@ const jsonLd = {
   description="Licensed Los Angeles plumbing, drain & sewer contractor. Trenchless sewer repair, hydro-jetting, water heaters, repipes and more. Call (310) 780-0362."
   jsonLd={jsonLd}
 >
-  <TopStrip />
   <Header />
 
   <main id="main">
     <Hero />
     <TrustBar />
     <AboutSection />
+    <Reviews />
     <ServicesGrid />
     <EmergencyBanner />
     <WhyUs />
-    <ServiceAreas />
+    <ServiceAreas showGrid={false} />
     <ContactSection />
   </main>
 
