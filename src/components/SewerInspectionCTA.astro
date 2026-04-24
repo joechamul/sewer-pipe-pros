@@ -1,0 +1,291 @@
+---
+import Icon from './Icon.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const bullets = [
+  'Roots, offsets, cracks, bellies, and collapsed sections',
+  'Older clay and cast iron pipe issues',
+  'Video proof and clear recommendations',
+  'Helpful for buyers, homeowners, and realtors',
+];
+---
+
+<section class="inspection section" aria-labelledby="inspection-title">
+  <div class="container inspection__grid">
+    <div class="inspection__media reveal">
+      <div class="inspection__media-frame">
+        <img
+          src={`${base}/jobs/IMG_5922.jpg`}
+          alt="Sewer camera inspection revealing root intrusion in an old clay pipe in Los Angeles"
+          width="1200"
+          height="1600"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="inspection__media-scan" aria-hidden="true"></span>
+        <div class="inspection__media-tag">
+          <span class="inspection__media-tag-dot" aria-hidden="true"></span>
+          <span>LIVE FEED · HD SEWER CAMERA</span>
+        </div>
+        <div class="inspection__media-caption">
+          <strong>Root intrusion</strong>
+          <span>Clay-to-ABS transition · LA job</span>
+        </div>
+      </div>
+      <div class="inspection__media-badge" aria-hidden="true">
+        <Icon name="camera" size={18} />
+        <span>HD PROOF</span>
+      </div>
+    </div>
+
+    <div class="inspection__copy reveal">
+      <span class="eyebrow">Pre-Purchase Sewer Inspection</span>
+      <h2 id="inspection-title" class="inspection__title">
+        Buying a Home? <span class="text-red">Don't skip</span> the sewer inspection.
+      </h2>
+      <p class="inspection__lead">
+        Hidden sewer problems can turn into <strong>$10K–$30K repairs</strong> after closing. We inspect the main sewer line with HD camera equipment and explain exactly what we find in plain English — so buyers, homeowners, and realtors make the right call before escrow closes.
+      </p>
+
+      <ul class="inspection__bullets">
+        {bullets.map((b) => (
+          <li>
+            <span class="inspection__check" aria-hidden="true"><Icon name="check" size={14} /></span>
+            {b}
+          </li>
+        ))}
+      </ul>
+
+      <div class="inspection__ctas">
+        <a class="btn btn--lg" href="#request-form">
+          <Icon name="camera" size={20} /> Book a Sewer Inspection
+        </a>
+        <a class="btn btn--ghost-dark btn--lg" href="tel:+13107800362">
+          <Icon name="phone" size={18} /> (310) 780-0362
+        </a>
+      </div>
+
+      <p class="inspection__micro">
+        <span>Los Angeles sewer camera inspection</span>
+        <span class="inspection__micro-dot" aria-hidden="true">·</span>
+        <span>Pre-purchase &amp; escrow</span>
+        <span class="inspection__micro-dot" aria-hidden="true">·</span>
+        <span>Video report included</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .inspection {
+    position: relative;
+    background:
+      radial-gradient(ellipse 60% 40% at 85% 0%, rgba(63, 194, 238, 0.10), transparent 60%),
+      radial-gradient(ellipse 80% 50% at 10% 100%, rgba(229, 32, 42, 0.06), transparent 60%),
+      var(--paper);
+    overflow: hidden;
+  }
+
+  .inspection__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .inspection__grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── Media ─── */
+  .inspection__media {
+    position: relative;
+    max-width: 480px;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  .inspection__media-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #000;
+    border: 2px solid var(--ink);
+    box-shadow:
+      0 30px 60px -20px rgba(26, 28, 36, 0.45),
+      0 0 0 6px #fff,
+      0 0 0 7px var(--line);
+    aspect-ratio: 3 / 4;
+  }
+  .inspection__media-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: contrast(1.08) saturate(1.05);
+  }
+
+  .inspection__media-scan {
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        rgba(63, 194, 238, 0.06) 0px,
+        rgba(63, 194, 238, 0.06) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .inspection__media-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+  }
+
+  .inspection__media-tag {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.65rem;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    z-index: 2;
+  }
+  .inspection__media-tag-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--red);
+    box-shadow: 0 0 0 0 rgba(229, 32, 42, 0.55);
+    animation: pulseDot 1.6s ease-out infinite;
+  }
+
+  .inspection__media-caption {
+    position: absolute;
+    left: 0.85rem;
+    bottom: 0.85rem;
+    display: grid;
+    gap: 0.1rem;
+    color: #fff;
+    z-index: 2;
+    line-height: 1.2;
+  }
+  .inspection__media-caption strong {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .inspection__media-caption span {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.78);
+    letter-spacing: 0.04em;
+  }
+
+  .inspection__media-badge {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.75rem;
+    background: var(--red);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    border-radius: 999px;
+    box-shadow: 0 10px 22px -6px rgba(229, 32, 42, 0.5);
+    transform: rotate(4deg);
+    z-index: 3;
+  }
+
+  /* ─── Copy ─── */
+  .inspection__title {
+    font-size: clamp(2rem, 2.4vw + 1rem, 3.1rem);
+    margin-bottom: 1rem;
+    max-width: 20ch;
+  }
+
+  .inspection__lead {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--ink);
+    max-width: 52ch;
+    margin-bottom: 1.5rem;
+  }
+  .inspection__lead strong {
+    color: var(--red);
+    font-weight: 800;
+  }
+
+  .inspection__bullets {
+    list-style: none;
+    margin: 0 0 1.75rem;
+    padding: 0;
+    display: grid;
+    gap: 0.55rem;
+  }
+  .inspection__bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .inspection__check {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .inspection__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .inspection__micro {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .inspection__micro-dot { color: var(--cyan); }
+
+  @media (max-width: 900px) {
+    .inspection__grid { gap: 2.5rem; }
+    .inspection__media-badge { transform: rotate(3deg); right: -8px; top: -12px; }
+  }
+</style>

@@ -1,0 +1,265 @@
+---
+import Icon from './Icon.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const problems = [
+  {
+    n: '01',
+    title: 'Root Intrusion',
+    image: 'IMG_5922.jpg',
+    badge: 'Clay → ABS',
+    body: 'Tree roots squeeze into hairline cracks and joints, then grow into a full blockage. Classic on LA properties with mature trees and clay sewer lines.',
+  },
+  {
+    n: '02',
+    title: 'Offset Pipe Joints',
+    image: 'IMG_5921.jpg',
+    badge: 'Main line',
+    body: 'Decades of soil shift cause pipe sections to separate. Water and waste leak out, soil settles, and the line slowly collapses inward.',
+  },
+  {
+    n: '03',
+    title: 'Cracked Clay Pipe',
+    image: 'IMG_5930.jpg',
+    badge: 'Pre-1970 homes',
+    body: 'Brittle vitrified clay is still under thousands of LA homes. Hairline cracks become backups, and once it breaks, spot-patches rarely hold.',
+  },
+  {
+    n: '04',
+    title: 'Rusted Cast Iron',
+    image: 'IMG_5929.jpg',
+    badge: 'Crawlspace / sub-slab',
+    body: 'Cast iron rots from the inside out — the bottom of the pipe flakes away and waste flows through a rust shell. Common under mid-century homes.',
+  },
+  {
+    n: '05',
+    title: 'Pipe Bellies & Standing Water',
+    image: 'IMG_5928.jpg',
+    badge: 'Low-slope line',
+    body: 'A dip in the sewer line holds water and solids. It looks fine on camera for a while, then backs up every time a load of laundry runs.',
+  },
+  {
+    n: '06',
+    title: 'Collapsed Sewer Lines',
+    image: 'IMG_5920.jpg',
+    badge: 'Full replacement',
+    body: 'When a section caves in, the yard stops draining and nothing clears it with a snake. Trenchless or open-trench replacement is the only real fix.',
+  },
+];
+---
+
+<section class="problems section section-dark" aria-labelledby="problems-title">
+  <div class="problems__bg" aria-hidden="true"></div>
+  <div class="container">
+    <header class="problems__header">
+      <span class="eyebrow">Field Report</span>
+      <h2 id="problems-title" class="section-title">Common sewer problems we find every week.</h2>
+      <p class="section-lead">
+        Every photo below is an actual Sewer Pipe Pros job in Greater LA. If your home has slow drains, gurgles, or a sewer smell in the yard — you're probably looking at one of these.
+      </p>
+    </header>
+
+    <div class="problems__grid">
+      {problems.map((p) => (
+        <article class="problems__card reveal">
+          <figure class="problems__figure">
+            <img
+              src={`${base}/jobs/${p.image}`}
+              alt={`${p.title} — real Sewer Pipe Pros job in Los Angeles`}
+              width="1200"
+              height="1600"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="problems__n" aria-hidden="true">{p.n}</span>
+            <span class="problems__badge">{p.badge}</span>
+          </figure>
+          <div class="problems__body">
+            <h3 class="problems__title">{p.title}</h3>
+            <p class="problems__text">{p.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="problems__cta">
+      <p>See any of these on your property? Book a camera inspection before it becomes a $20K repair.</p>
+      <div class="problems__cta-btns">
+        <a class="btn btn--lg" href="#request-form">
+          <Icon name="camera" size={20} /> Book Sewer Camera Inspection
+        </a>
+        <a class="btn btn--ghost btn--lg" href="tel:+13107800362">
+          <Icon name="phone" size={18} /> (310) 780-0362
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .problems {
+    position: relative;
+    background: var(--ink);
+    overflow: hidden;
+  }
+  .problems__bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, black 40%, transparent 85%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, black 40%, transparent 85%);
+    pointer-events: none;
+    opacity: 0.55;
+  }
+  .problems__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 30% at 85% 0%, rgba(63, 194, 238, 0.14), transparent 60%),
+      radial-gradient(ellipse 40% 30% at 10% 100%, rgba(229, 32, 42, 0.14), transparent 60%);
+  }
+
+  .problems__header {
+    position: relative;
+    max-width: 60ch;
+    margin-bottom: 3rem;
+  }
+
+  .problems__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  @media (max-width: 900px) { .problems__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .problems__grid { grid-template-columns: 1fr; } }
+
+  .problems__card {
+    position: relative;
+    background: #15171f;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    transition: transform var(--t-med), border-color var(--t-med), box-shadow var(--t-med);
+  }
+  .problems__card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(63, 194, 238, 0.35);
+    box-shadow: 0 24px 48px -20px rgba(0,0,0,0.8);
+  }
+  .problems__card::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--cyan));
+    opacity: 0.7;
+    z-index: 2;
+  }
+
+  .problems__figure {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #000;
+  }
+  .problems__figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+    filter: saturate(1.02) contrast(1.05);
+  }
+  .problems__card:hover .problems__figure img { transform: scale(1.04); }
+  .problems__figure::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.75) 100%);
+    pointer-events: none;
+  }
+
+  .problems__n {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.9rem;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 2.25rem;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    letter-spacing: -0.03em;
+    z-index: 2;
+  }
+
+  .problems__badge {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 0.9rem;
+    padding: 0.3rem 0.65rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(63, 194, 238, 0.35);
+    border-radius: 999px;
+    z-index: 2;
+  }
+
+  .problems__body {
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+
+  .problems__title {
+    color: #fff;
+    font-size: 1.3rem;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.005em;
+  }
+
+  .problems__text {
+    color: #c9ccd6;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .problems__cta {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(229, 32, 42, 0.14), rgba(63, 194, 238, 0.08));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-card);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .problems__cta p {
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.05rem, 1vw + 0.8rem, 1.35rem);
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    max-width: 36ch;
+    margin: 0;
+  }
+  .problems__cta-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>

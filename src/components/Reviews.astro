@@ -18,6 +18,13 @@ const formatLongDate = (iso: string) => longDateFmt.format(new Date(iso));
 const sorted = [...reviews].sort((a, b) => b.date.localeCompare(a.date));
 const featured = sorted[0];
 const rest = sorted.slice(1);
+
+const pullQuotes = [
+  'No upsell, just honest service.',
+  'Found the sewer problem before it became worse.',
+  'Professional, fast, and clear communication.',
+  'Great for first-time homeowners.',
+];
 ---
 
 <section class="reviews section">
@@ -96,6 +103,16 @@ const rest = sorted.slice(1);
         </div>
       </figure>
     </div>
+
+    <!-- Pull-quote marquee / highlight strip -->
+    <ul class="reviews__pulls" aria-label="What customers say most often">
+      {pullQuotes.map((q, i) => (
+        <li class="reviews__pull reveal" style={`--delay:${i * 60}ms`}>
+          <span class="reviews__pull-mark" aria-hidden="true">"</span>
+          <span class="reviews__pull-text">{q}</span>
+        </li>
+      ))}
+    </ul>
 
     <!-- Review cards -->
     <ul class="reviews__grid">
@@ -412,11 +429,71 @@ const rest = sorted.slice(1);
     .reviews__featured-service { grid-column: 1 / -1; text-align: left; max-width: none; padding-top: 0.25rem; }
   }
 
+  /* ─── Pull-quote highlight strip ────────────────────────── */
+  .reviews__pulls {
+    list-style: none;
+    margin: 3rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  @media (max-width: 960px) { .reviews__pulls { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .reviews__pulls { grid-template-columns: 1fr; } }
+
+  .reviews__pull {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.1rem 1rem 1.1rem 2.25rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: var(--ink);
+    letter-spacing: 0.005em;
+    transition-delay: var(--delay, 0ms);
+    transition:
+      opacity 0.6s var(--ease),
+      transform 0.6s var(--ease),
+      box-shadow var(--t-med),
+      border-color var(--t-med);
+  }
+  .reviews__pull:hover {
+    box-shadow: var(--shadow-sm);
+    border-color: rgba(229, 32, 42, 0.3);
+  }
+  .reviews__pull::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--red);
+    border-radius: 12px 0 0 12px;
+  }
+  .reviews__pull:nth-child(2)::before { background: var(--cyan); }
+  .reviews__pull:nth-child(3)::before { background: var(--ink); }
+  .reviews__pull:nth-child(4)::before { background: var(--red); }
+
+  .reviews__pull-mark {
+    position: absolute;
+    left: 0.7rem;
+    top: 0.4rem;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 2rem;
+    line-height: 1;
+    color: rgba(229, 32, 42, 0.35);
+  }
+
   /* ─── Review cards grid ─────────────────────────────────── */
   .reviews__grid {
     list-style: none;
     padding: 0;
-    margin: 3rem 0 1.25rem;
+    margin: 1.25rem 0 1.25rem;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.25rem;

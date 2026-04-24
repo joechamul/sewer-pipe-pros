@@ -23,11 +23,11 @@ function isActive(href: string): boolean {
   <div class="container-wide site-header__inner">
     <a href={`${base}/`} class="site-header__brand" aria-label="Sewer Pipe Pros home">
       <img
-        src={`${base}/transparent-logo.png`}
+        src={`${base}/logo-dark-transparent.png`}
         alt="Sewer Pipe Pros"
         class="site-header__logo"
-        width="220"
-        height="78"
+        width="1332"
+        height="612"
         loading="eager"
         decoding="async"
       />
@@ -130,13 +130,17 @@ function isActive(href: string): boolean {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: #ffffff;
-    border-bottom: 1px solid transparent;
-    transition: box-shadow var(--t-fast), border-color var(--t-fast);
+    background: var(--ink);
+    color: #fff;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: background var(--t-fast), box-shadow var(--t-fast), border-color var(--t-fast), backdrop-filter var(--t-fast);
   }
   .site-header.is-scrolled {
-    box-shadow: 0 6px 24px rgba(26,28,36,0.08);
-    border-bottom-color: var(--line);
+    background: rgba(21, 23, 31, 0.88);
+    backdrop-filter: saturate(1.4) blur(10px);
+    -webkit-backdrop-filter: saturate(1.4) blur(10px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    border-bottom-color: rgba(255,255,255,0.1);
   }
 
   .site-header__inner {
@@ -144,21 +148,21 @@ function isActive(href: string): boolean {
     grid-template-columns: auto 1fr auto auto;
     align-items: center;
     gap: 1.25rem;
-    padding-block: 0.75rem;
+    padding-block: 0.15rem;
   }
 
   .site-header__brand {
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    color: var(--ink);
+    color: #fff;
     font-family: var(--font-display);
     line-height: 1;
   }
-  .site-header__brand:hover { color: var(--ink); }
+  .site-header__brand:hover { color: #fff; }
 
   .site-header__logo {
-    height: 52px;
+    height: 72px;
     width: auto;
     max-width: none;
     display: block;
@@ -180,9 +184,10 @@ function isActive(href: string): boolean {
     font-size: 0.95rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--ink);
+    color: rgba(255,255,255,0.82);
     padding: 0.5rem 0.1rem;
     position: relative;
+    transition: color var(--t-fast);
   }
   .site-header__link::after {
     content: '';
@@ -194,9 +199,9 @@ function isActive(href: string): boolean {
     transform-origin: left;
     transition: transform var(--t-fast);
   }
-  .site-header__link:hover,
+  .site-header__link:hover { color: #fff; }
   .site-header__link.is-active {
-    color: var(--red);
+    color: #fff;
   }
   .site-header__link:hover::after,
   .site-header__link.is-active::after {
@@ -209,7 +214,7 @@ function isActive(href: string): boolean {
     display: none;
     width: 44px; height: 44px;
     align-items: center; justify-content: center;
-    color: var(--ink);
+    color: #fff;
   }
   .site-header__toggle :global(.icon-close) { display: none; }
   .site-header.is-menu-open .site-header__toggle :global(.icon-open) { display: none; }
@@ -217,8 +222,8 @@ function isActive(href: string): boolean {
 
   .mobile-menu {
     display: none;
-    border-top: 1px solid var(--line);
-    background: var(--paper);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    background: var(--ink);
     padding: 1rem 1.25rem 1.5rem;
   }
   .mobile-menu ul {
@@ -233,19 +238,23 @@ function isActive(href: string): boolean {
     align-items: center;
     justify-content: space-between;
     padding: 0.9rem 0.75rem;
-    color: var(--ink);
+    color: rgba(255,255,255,0.85);
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 1.1rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     border-radius: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
+  .mobile-menu__link :global(svg) { color: var(--cyan); opacity: 0.6; }
   .mobile-menu__link:hover,
   .mobile-menu__link.is-active {
-    background: #fff;
-    color: var(--red);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
   }
+  .mobile-menu__link:hover :global(svg),
+  .mobile-menu__link.is-active :global(svg) { opacity: 1; color: var(--red); }
 
   @media (max-width: 960px) {
     .site-header__nav { display: none; }
@@ -260,6 +269,6 @@ function isActive(href: string): boolean {
   @media (max-width: 560px) {
     .site-header__cta { display: none; }
     .site-header__inner { grid-template-columns: 1fr auto; gap: 0.75rem; }
-    .site-header__logo { height: 42px; }
+    .site-header__logo { height: 54px; }
   }
 </style>

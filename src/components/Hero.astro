@@ -12,12 +12,12 @@ import RequestForm from './RequestForm.astro';
       <span class="chip chip--live"><span class="dot" aria-hidden="true"></span> 24/7 Emergency Service Available</span>
 
       <h1 class="hero__title">
-        LA's <span class="text-red">Licensed</span> Plumbing,<br />
-        Drain &amp; <span class="text-cyan">Sewer</span> Experts
+        LA's <span class="text-red">Sewer</span>, Drain &amp; <span class="text-cyan">Plumbing</span> Experts —<br />
+        <span class="hero__title-sub">Catch Costly Problems Before They Get Worse.</span>
       </h1>
 
       <p class="hero__sub">
-        Sewer Pipe Pros Inc. delivers honest, expert plumbing for homes and businesses across Los Angeles. From trenchless sewer repair to tankless water heaters — we serve differently.
+        Sewer camera inspections, hydro-jetting, trenchless repairs, and honest plumbing service for Greater Los Angeles homeowners, buyers, businesses, and realtors.
       </p>
 
       <div class="hero__ctas">
@@ -29,9 +29,9 @@ import RequestForm from './RequestForm.astro';
 
       <ul class="hero__checks">
         <li><Icon name="check" size={18} /> Licensed &amp; Insured</li>
-        <li><Icon name="check" size={18} /> Residential &amp; Commercial</li>
-        <li><Icon name="check" size={18} /> Upfront Honest Pricing</li>
-        <li><Icon name="check" size={18} /> Same-Day Service</li>
+        <li><Icon name="check" size={18} /> C36 &amp; C42 Contractor</li>
+        <li><Icon name="check" size={18} /> Same-Day Service Available</li>
+        <li><Icon name="check" size={18} /> Sewer Camera Inspections</li>
       </ul>
     </div>
 
@@ -91,6 +91,16 @@ import RequestForm from './RequestForm.astro';
     color: #fff;
     margin: 1rem 0 1.25rem;
     font-weight: 900;
+    line-height: 1.02;
+  }
+  .hero__title-sub {
+    display: inline-block;
+    font-size: 0.72em;
+    font-weight: 800;
+    color: #f0f2f7;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
   }
 
   .hero__sub {

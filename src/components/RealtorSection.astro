@@ -1,0 +1,350 @@
+---
+import Icon from './Icon.astro';
+
+const bullets = [
+  { icon: 'clock',    text: 'Fast inspection scheduling — often same-day' },
+  { icon: 'camera',   text: 'HD video and photo documentation' },
+  { icon: 'shield',   text: 'Plain-English reports your clients can understand' },
+  { icon: 'dollar',   text: 'Clear repair estimates when needed' },
+  { icon: 'users',    text: 'Professional communication with buyers, sellers &amp; agents' },
+  { icon: 'key',      text: 'On-time before escrow closes' },
+];
+---
+
+<section class="realtor section" aria-labelledby="realtor-title">
+  <div class="realtor__accent" aria-hidden="true"></div>
+  <div class="container realtor__grid">
+    <div class="realtor__copy reveal">
+      <span class="eyebrow">For Realtors &amp; Home Buyers</span>
+      <h2 id="realtor-title" class="realtor__title">
+        Protect your client's investment — before <span class="text-red">escrow closes</span>.
+      </h2>
+      <p class="realtor__lead">
+        We help LA agents protect their clients with fast scheduling, clear sewer reports, and honest repair recommendations. A 45-minute camera inspection can change the outcome of a six-figure deal.
+      </p>
+
+      <ul class="realtor__bullets">
+        {bullets.map((b) => (
+          <li>
+            <span class="realtor__bullet-icon" aria-hidden="true"><Icon name={b.icon} size={18} /></span>
+            <span set:html={b.text}></span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="realtor__ctas">
+        <a class="btn btn--lg" href="#request-form">
+          <Icon name="users" size={20} /> Refer a Client
+        </a>
+        <a class="btn btn--ghost-dark btn--lg" href="#request-form">Schedule Inspection</a>
+      </div>
+
+      <p class="realtor__seo">
+        Realtor sewer inspection · home buyer sewer inspection · Los Angeles pre-purchase sewer camera
+      </p>
+    </div>
+
+    <aside class="realtor__card reveal" aria-label="What realtors get">
+      <div class="realtor__card-head">
+        <span class="realtor__card-kicker">Sample Inspection Report</span>
+        <span class="realtor__card-chip">
+          <span class="realtor__card-chip-dot" aria-hidden="true"></span>
+          DELIVERED · SAME DAY
+        </span>
+      </div>
+
+      <div class="realtor__card-line">
+        <span class="realtor__card-label">Property</span>
+        <span class="realtor__card-value">123 Oak Ave, Mar Vista, CA</span>
+      </div>
+      <div class="realtor__card-line">
+        <span class="realtor__card-label">Line material</span>
+        <span class="realtor__card-value">Clay · installed ~1948</span>
+      </div>
+      <div class="realtor__card-line">
+        <span class="realtor__card-label">Length scoped</span>
+        <span class="realtor__card-value">~72 ft to city main</span>
+      </div>
+
+      <div class="realtor__findings">
+        <span class="realtor__findings-label">Findings</span>
+        <ul>
+          <li><span class="realtor__tag realtor__tag--warn">Roots</span> Offset at 22 ft — moderate intrusion</li>
+          <li><span class="realtor__tag realtor__tag--warn">Belly</span> Low spot at 41–48 ft — holds water</li>
+          <li><span class="realtor__tag realtor__tag--ok">Clean</span> City connection intact</li>
+        </ul>
+      </div>
+
+      <div class="realtor__card-foot">
+        <div>
+          <strong>Recommended</strong>
+          <span>Trenchless spot repair + hydro-jet</span>
+        </div>
+        <div class="realtor__card-est">
+          <span>Est.</span>
+          <strong>$4,800</strong>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .realtor {
+    position: relative;
+    background: linear-gradient(180deg, #fff 0%, #fbf9f4 100%);
+    overflow: hidden;
+  }
+  .realtor__accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--red) 0%, var(--red) 40%, var(--cyan) 100%);
+  }
+
+  .realtor__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  @media (max-width: 960px) {
+    .realtor__grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── Copy ─── */
+  .realtor__title {
+    font-size: clamp(2rem, 2.5vw + 1rem, 3.2rem);
+    max-width: 20ch;
+    margin-bottom: 1rem;
+  }
+  .realtor__lead {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--ink);
+    max-width: 52ch;
+    margin-bottom: 1.5rem;
+  }
+
+  .realtor__bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.75rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem 1.25rem;
+  }
+  @media (max-width: 560px) {
+    .realtor__bullets { grid-template-columns: 1fr; }
+  }
+  .realtor__bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+  .realtor__bullet-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: #fff4f5;
+    color: var(--red);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .realtor__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .realtor__seo {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ─── Mock report card ─── */
+  .realtor__card {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 1.75rem 1.5rem 1.25rem;
+    box-shadow:
+      0 30px 60px -28px rgba(26, 28, 36, 0.3),
+      0 12px 24px -18px rgba(26, 28, 36, 0.2);
+    display: grid;
+    gap: 0.9rem;
+  }
+  .realtor__card::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--cyan));
+    border-radius: 0 0 3px 3px;
+  }
+
+  .realtor__card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .realtor__card-kicker {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .realtor__card-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.55rem;
+    background: #eefaf3;
+    color: #0b8654;
+    border: 1px solid #bde9d4;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+  }
+  .realtor__card-chip-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: #12a668;
+    box-shadow: 0 0 0 0 rgba(18, 166, 104, 0.45);
+    animation: pulseDot 2s ease-out infinite;
+  }
+
+  .realtor__card-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.85rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px dashed var(--line);
+  }
+  .realtor__card-label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+  .realtor__card-value {
+    font-weight: 600;
+    color: var(--ink);
+    text-align: right;
+  }
+
+  .realtor__findings-label {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--red);
+    font-size: 0.72rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .realtor__findings ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+  .realtor__findings li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+    color: var(--ink);
+  }
+
+  .realtor__tag {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .realtor__tag--warn {
+    background: #fff4f5;
+    color: var(--red);
+    border: 1px solid rgba(229,32,42,0.25);
+  }
+  .realtor__tag--ok {
+    background: #eefaf3;
+    color: #0b8654;
+    border: 1px solid #bde9d4;
+  }
+
+  .realtor__card-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--line);
+  }
+  .realtor__card-foot strong {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .realtor__card-foot span {
+    font-size: 0.85rem;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .realtor__card-est {
+    text-align: right;
+  }
+  .realtor__card-est span {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .realtor__card-est strong {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+</style>

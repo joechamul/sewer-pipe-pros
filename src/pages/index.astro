@@ -5,6 +5,10 @@ import Footer from '../components/Footer.astro';
 import StickyCall from '../components/StickyCall.astro';
 import Hero from '../components/Hero.astro';
 import TrustBar from '../components/TrustBar.astro';
+import SewerInspectionCTA from '../components/SewerInspectionCTA.astro';
+import CommonProblems from '../components/CommonProblems.astro';
+import RecentWork from '../components/RecentWork.astro';
+import RealtorSection from '../components/RealtorSection.astro';
 import AboutSection from '../components/AboutSection.astro';
 import ServicesGrid from '../components/ServicesGrid.astro';
 import EmergencyBanner from '../components/EmergencyBanner.astro';
@@ -76,11 +80,15 @@ const jsonLd = {
   <main id="main">
     <Hero />
     <TrustBar />
-    <AboutSection />
-    <Reviews />
+    <SewerInspectionCTA />
+    <CommonProblems />
     <ServicesGrid />
-    <EmergencyBanner />
+    <RecentWork />
     <WhyUs />
+    <Reviews />
+    <RealtorSection />
+    <EmergencyBanner />
+    <AboutSection />
     <ServiceAreas showGrid={false} />
     <ContactSection />
   </main>
