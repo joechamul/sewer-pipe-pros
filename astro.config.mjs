@@ -2,7 +2,6 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://joechamul.github.io',
-  base: '/sewer-pipe-pros',
+  site: 'https://sewerpipepros.com',
   trailingSlash: 'ignore',
 });
