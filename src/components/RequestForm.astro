@@ -131,7 +131,6 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
 
     {/* Cloudflare Turnstile widget — renders inline CAPTCHA challenge */}
     <div data-turnstile-widget class="form__captcha"></div>
-    <input type="hidden" name="cf-turnstile-response" data-turnstile-token />
 
     <p class="form__error" data-error aria-live="polite"></p>
 
@@ -207,9 +206,9 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
     const errEl = form.querySelector<HTMLElement>('[data-error]');
     const submitBtn = form.querySelector<HTMLButtonElement>('[data-submit]');
     const widget = form.querySelector<HTMLElement>('[data-turnstile-widget]');
-    const tokenInput = form.querySelector<HTMLInputElement>('[data-turnstile-token]');
 
     let widgetRendered = false;
+    let tsToken = '';
 
     const showAndRenderWidget = () => {
       if (widgetRendered || !widget) return;
@@ -219,15 +218,10 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
       const doRender = () => {
         (window as any).turnstile?.render(widget, {
           sitekey: TURNSTILE_SITE_KEY,
-          callback: (token: string) => {
-            if (tokenInput) tokenInput.value = token;
-          },
-          'expired-callback': () => {
-            if (tokenInput) tokenInput.value = '';
-          },
-          'error-callback': () => {
-            if (tokenInput) tokenInput.value = '';
-          },
+          'response-field': false,
+          callback: (token: string) => { tsToken = token; },
+          'expired-callback': () => { tsToken = ''; },
+          'error-callback': () => { tsToken = ''; },
         });
       };
 
@@ -274,8 +268,7 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
       }
 
       // Turnstile: require a valid token before allowing submission.
-      const turnstileToken = String(raw.get('cf-turnstile-response') || '').trim();
-      if (!turnstileToken) {
+      if (!tsToken) {
         showError('Please complete the security check before submitting.');
         return;
       }
@@ -359,6 +352,7 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
           errEl.textContent = '';
           form.reset();
           (window as any).turnstile?.reset();
+          tsToken = '';
           submitBtn.textContent = 'Request Sent!';
           setTimeout(() => {
             submitBtn.disabled = false;
