@@ -351,7 +351,6 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
           body: JSON.stringify({
             access_key: accessKey,
             name, phone, email, address, service, message,
-            'cf-turnstile-response': turnstileToken,
           }),
         });
         const data = await res.json() as { success: boolean; message?: string };
