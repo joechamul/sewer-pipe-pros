@@ -28,7 +28,8 @@ import RequestForm from './RequestForm.astro';
       </div>
 
       <ul class="hero__checks">
-        <li><Icon name="check" size={18} /> Licensed &amp; Insured</li>
+        <li><Icon name="check" size={18} /> Licensed &amp; Bonded</li>
+        <li><Icon name="check" size={18} /> Class A General Engineering</li>
         <li><Icon name="check" size={18} /> C36 &amp; C42 Contractor</li>
         <li><Icon name="check" size={18} /> Same-Day Service Available</li>
         <li><Icon name="check" size={18} /> Sewer Camera Inspections</li>
@@ -122,8 +123,8 @@ import RequestForm from './RequestForm.astro';
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, auto));
-    gap: 0.7rem 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
     color: #e5e7ec;
   }
   @media (max-width: 520px) {
