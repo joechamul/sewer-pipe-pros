@@ -26,6 +26,9 @@ jobs:
         with:
           node-version: 20
           package-manager: npm
+        env:
+          PUBLIC_WEB3FORMS_KEY: ${{ secrets.PUBLIC_WEB3FORMS_KEY }}
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.PUBLIC_TURNSTILE_SITE_KEY }}
 
   deploy:
     needs: build

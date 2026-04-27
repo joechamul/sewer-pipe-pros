@@ -1,6 +1,8 @@
 ---
 import { services } from '../data/services';
 
+const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+
 export interface Props {
   defaultService?: string;
   compact?: boolean;
@@ -35,6 +37,9 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
   )}
 
   <form class="form" data-request-form novalidate autocomplete="on" spellcheck="false">
+    {/* Web3Forms access key — get yours free at web3forms.com */}
+    <input type="hidden" name="access_key" value={web3formsKey} />
+    <input type="hidden" name="subject" value="New Service Request — Sewer Pipe Pros" />
     <div class="form__row">
       <div>
         <label for="rf-name">Full Name</label>
@@ -124,6 +129,10 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
       <input id="rf-website" name="website" type="text" tabindex="-1" autocomplete="off" />
     </div>
 
+    {/* Cloudflare Turnstile widget — renders inline CAPTCHA challenge */}
+    <div data-turnstile-widget class="form__captcha"></div>
+    <input type="hidden" name="cf-turnstile-response" data-turnstile-token />
+
     <p class="form__error" data-error aria-live="polite"></p>
 
     <button type="submit" class="btn btn--block btn--lg" data-submit>
@@ -137,18 +146,24 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
 </div>
 
 <script>
-  // Client-side validation + defensive input cleanup.
-  //
-  // IMPORTANT: client-side sanitization is a defense-in-depth layer only.
-  // Real XSS/injection protection has to happen on whatever backend
-  // eventually receives these values (Formspree, Web3Forms, your own API).
-  // On the server: escape on output, parameterize queries, rate-limit, and
-  // verify Origin/Referer headers.
-  //
-  // TODO: wire this up to your submission endpoint. Example (Formspree):
-  //   form.action = "https://formspree.io/f/YOUR_ID";
-  //   form.method = "POST";
-  // Then replace the alert block below with a fetch() + real confirmation UI.
+  // REPLACE both placeholder keys below before going live:
+  //   WEB3FORMS_KEY  → web3forms.com (free, no credit card)
+  //   TURNSTILE_KEY  → dash.cloudflare.com → Turnstile (free)
+  // Web3Forms verifies the Turnstile token server-side automatically.
+  const TURNSTILE_SITE_KEY = `${import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? ''}`;
+
+  // Load Turnstile script eagerly; render lazily on first form interaction.
+  let tsReady = false;
+  const pendingRenders: Array<() => void> = [];
+
+  const tsScript = document.createElement('script');
+  tsScript.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+  tsScript.async = true;
+  document.head.appendChild(tsScript);
+  tsScript.onload = () => {
+    tsReady = true;
+    pendingRenders.splice(0).forEach(fn => fn());
+  };
 
   // Hard caps mirror the `maxlength` attrs on each input.
   const LIMITS = {
@@ -191,6 +206,36 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
   document.querySelectorAll<HTMLFormElement>('[data-request-form]').forEach((form) => {
     const errEl = form.querySelector<HTMLElement>('[data-error]');
     const submitBtn = form.querySelector<HTMLButtonElement>('[data-submit]');
+    const widget = form.querySelector<HTMLElement>('[data-turnstile-widget]');
+    const tokenInput = form.querySelector<HTMLInputElement>('[data-turnstile-token]');
+
+    let widgetRendered = false;
+
+    const showAndRenderWidget = () => {
+      if (widgetRendered || !widget) return;
+      widgetRendered = true;
+      widget.classList.add('is-visible');
+
+      const doRender = () => {
+        (window as any).turnstile?.render(widget, {
+          sitekey: TURNSTILE_SITE_KEY,
+          callback: (token: string) => {
+            if (tokenInput) tokenInput.value = token;
+          },
+          'expired-callback': () => {
+            if (tokenInput) tokenInput.value = '';
+          },
+          'error-callback': () => {
+            if (tokenInput) tokenInput.value = '';
+          },
+        });
+      };
+
+      if (tsReady) { doRender(); } else { pendingRenders.push(doRender); }
+    };
+
+    form.addEventListener('input', () => showAndRenderWidget(), { once: true });
+    form.addEventListener('focusin', () => showAndRenderWidget(), { once: true });
 
     // Time-gate: record when the form was rendered. Bots submit instantly.
     const renderedAt = Date.now();
@@ -208,7 +253,7 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
       }
     };
 
-    form.addEventListener('submit', (ev) => {
+    form.addEventListener('submit', async (ev) => {
       ev.preventDefault();
       if (!errEl || !submitBtn) return;
       errEl.textContent = '';
@@ -225,6 +270,13 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
       const honey = String(raw.get('website') || '').trim();
       if (honey) {
         form.reset();
+        return;
+      }
+
+      // Turnstile: require a valid token before allowing submission.
+      const turnstileToken = String(raw.get('cf-turnstile-response') || '').trim();
+      if (!turnstileToken) {
+        showError('Please complete the security check before submitting.');
         return;
       }
 
@@ -290,24 +342,41 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending…';
 
-      // TODO: replace this with a real POST. The values in `payload` below
-      // are already sanitized + length-capped; still escape them on output.
-      const payload = { name, phone, email, address, service, message };
-      void payload;
+      const accessKey = (form.elements.namedItem('access_key') as HTMLInputElement)?.value ?? '';
 
-      setTimeout(() => {
-        // alert() renders plain text (not HTML), so interpolating `name`/`phone`
-        // here is safe even before sanitization — keep it that way when you
-        // swap in a real confirmation UI: use textContent, never innerHTML.
-        alert(
-          `Thanks, ${name}! We received your request for ${service}.\n` +
-          `We'll call you at ${phone} shortly.\n\n` +
-          `For emergencies, call us directly at (310) 780-0362.`
-        );
-        form.reset();
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: accessKey,
+            name, phone, email, address, service, message,
+            'cf-turnstile-response': turnstileToken,
+          }),
+        });
+        const data = await res.json() as { success: boolean; message?: string };
+
+        if (data.success) {
+          errEl.textContent = '';
+          form.reset();
+          (window as any).turnstile?.reset();
+          submitBtn.textContent = 'Request Sent!';
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Request Service Call →';
+          }, 4000);
+        } else {
+          showError(data.message ?? 'Something went wrong. Please call us directly at (310) 780-0362.');
+          (window as any).turnstile?.reset();
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Request Service Call →';
+        }
+      } catch {
+        showError('Network error. Please call us directly at (310) 780-0362.');
+        (window as any).turnstile?.reset();
         submitBtn.disabled = false;
         submitBtn.textContent = 'Request Service Call →';
-      }, 500);
+      }
     });
   });
 </script>
@@ -344,6 +413,9 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
     color: var(--muted);
     margin: 0 0 1rem;
   }
+
+  .form__captcha { margin-top: 0.25rem; display: none; }
+  .form__captcha.is-visible { display: block; }
 
   /* Honeypot: invisible to humans, present in the DOM for bots to fill. */
   .form__honey {
