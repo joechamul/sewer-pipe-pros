@@ -1,11 +1,8 @@
 import { defineCollection, z } from 'astro:content';
-
-// Optional content collections. The site currently generates service/area pages
-// from src/data/*.ts — these collections are here for any long-form content
-// (neighborhood guides, service deep-dives) you want to add as markdown.
+import { glob } from 'astro/loaders';
 
 const services = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/services' }),
   schema: z.object({
     title: z.string(),
     slug: z.string().optional(),
@@ -15,7 +12,7 @@ const services = defineCollection({
 });
 
 const areas = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/areas' }),
   schema: z.object({
     title: z.string(),
     slug: z.string().optional(),

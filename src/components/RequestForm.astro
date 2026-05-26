@@ -211,9 +211,10 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
     let tsToken = '';
 
     const showAndRenderWidget = () => {
-      if (widgetRendered || !widget) return;
-      widgetRendered = true;
+      if (!widget) return;
       widget.classList.add('is-visible');
+      if (widgetRendered) return;
+      widgetRendered = true;
 
       const doRender = () => {
         (window as any).turnstile?.render(widget, {
@@ -228,8 +229,8 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
       if (tsReady) { doRender(); } else { pendingRenders.push(doRender); }
     };
 
-    form.addEventListener('input', () => showAndRenderWidget(), { once: true });
-    form.addEventListener('focusin', () => showAndRenderWidget(), { once: true });
+    form.addEventListener('input', () => showAndRenderWidget());
+    form.addEventListener('focusin', () => showAndRenderWidget());
 
     // Time-gate: record when the form was rendered. Bots submit instantly.
     const renderedAt = Date.now();
@@ -351,7 +352,7 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
         if (data.success) {
           errEl.textContent = '';
           form.reset();
-          (window as any).turnstile?.reset();
+          widget?.classList.remove('is-visible');
           tsToken = '';
           submitBtn.textContent = 'Request Sent!';
           setTimeout(() => {
@@ -361,12 +362,14 @@ const categoryOrder = ['sewer', 'water', 'pipe', 'fixture'];
         } else {
           showError(data.message ?? 'Something went wrong. Please call us directly at (310) 780-0362.');
           (window as any).turnstile?.reset();
+          tsToken = '';
           submitBtn.disabled = false;
           submitBtn.textContent = 'Request Service Call →';
         }
       } catch {
         showError('Network error. Please call us directly at (310) 780-0362.');
         (window as any).turnstile?.reset();
+        tsToken = '';
         submitBtn.disabled = false;
         submitBtn.textContent = 'Request Service Call →';
       }
