@@ -19,7 +19,7 @@ const { area } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
 
-const defaultBlurb = `Licensed plumbing, drain, and sewer service in ${area.name}, California. Homes, apartments, and commercial properties — we handle everything from slow drains to trenchless sewer replacement.`;
+const defaultBlurb = `Licensed plumbing, drain, and sewer service in ${area.name}, California. Homes, apartments, and commercial properties: we handle everything from slow drains to trenchless sewer replacement.`;
 const blurb = area.blurb ?? defaultBlurb;
 
 const description = `Plumbing in ${area.name}, CA. Licensed LA contractor (#1126184) handling drain cleaning, trenchless sewer, water heaters, repipes & more. Call (310) 780-0362.`;
@@ -105,7 +105,7 @@ const jsonLd = [
         <ul class="area-hero__checks">
           <li><Icon name="check" size={18} /> Same-day in most of {area.name}</li>
           <li><Icon name="check" size={18} /> Licensed &amp; insured (Lic. #1126184)</li>
-          <li><Icon name="check" size={18} /> Upfront pricing — no hourly creep</li>
+          <li><Icon name="check" size={18} /> Upfront pricing, no hourly creep</li>
         </ul>
       </div>
     </section>
@@ -116,7 +116,7 @@ const jsonLd = [
         <div class="area-body__col reveal">
           <span class="eyebrow">Local Service</span>
           <h2>What {area.name} homeowners call us for.</h2>
-          <p>Every LA neighborhood has its own plumbing story — older clay sewer laterals, cast iron drains, slab construction, tight alley access. We've worked in {area.name} long enough to know what to expect before we arrive.</p>
+          <p>Every LA neighborhood has its own plumbing story: older clay sewer laterals, cast iron drains, slab construction, tight alley access. We've worked in {area.name} long enough to know what to expect before we arrive.</p>
           <ul class="area-body__list">
             <li><Icon name="check" size={18} /><span>Trenchless sewer repair &amp; replacement</span></li>
             <li><Icon name="check" size={18} /><span>Drain cleaning, hydro-jetting &amp; video inspection</span></li>
@@ -129,7 +129,7 @@ const jsonLd = [
         <aside class="area-body__cta reveal">
           <span class="eyebrow">Emergency?</span>
           <h3>We answer 24/7 in {area.name}.</h3>
-          <p>Burst pipe, backup, or gas smell — call and we'll dispatch a licensed tech right away.</p>
+          <p>Burst pipe, backup, or gas smell. Call and we'll dispatch a licensed tech right away.</p>
           <a class="btn btn--block btn--lg" href="tel:+13107800362">
             <Icon name="phone" size={20} /> (310) 780-0362
           </a>
@@ -146,7 +146,7 @@ const jsonLd = [
     <ContactSection
       eyebrow={`${area.name} Service Request`}
       title={`Book a job in ${area.name}.`}
-      lead={`Tell us what's going on and we'll get back to you — often same day.`}
+      lead={`Tell us what's going on and we'll get back to you, often same day.`}
     />
   </main>
 
