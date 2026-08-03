@@ -25,6 +25,13 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonicalUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
 const ogImageUrl = ogImage ?? `${siteUrl}${base}/logo.png`;
+
+// Cloudflare Web Analytics. Token comes from the PUBLIC_CF_BEACON_TOKEN env
+// var (stored as a GitHub secret, injected at build time). The beacon only
+// loads in production builds when the token is set, so local dev traffic never
+// pollutes the stats and nothing sensitive is committed to the repo.
+const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN ?? '';
+const analyticsEnabled = import.meta.env.PROD && cfBeaconToken !== '';
 ---
 
 <!doctype html>
@@ -72,7 +79,14 @@ const ogImageUrl = ogImage ?? `${siteUrl}${base}/logo.png`;
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     )}
 
-    <!-- TODO: analytics/tracking scripts go here (Plausible, GA4, etc.) -->
+    <!-- Cloudflare Web Analytics -->
+    {analyticsEnabled && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: cfBeaconToken })}
+      />
+    )}
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
