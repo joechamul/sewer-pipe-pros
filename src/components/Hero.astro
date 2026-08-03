@@ -9,25 +9,25 @@ import RequestForm from './RequestForm.astro';
 
   <div class="container hero__inner">
     <div class="hero__copy">
-      <span class="chip chip--live"><span class="dot" aria-hidden="true"></span> 24/7 Emergency Service Available</span>
+      <span class="chip chip--live rise"><span class="dot" aria-hidden="true"></span> 24/7 Emergency Service Available</span>
 
-      <h1 class="hero__title">
-        LA's <span class="text-red">Sewer</span>, Drain &amp; <span class="text-cyan">Plumbing</span> Experts —<br />
-        <span class="hero__title-sub">Catch Costly Problems Before They Get Worse.</span>
+      <h1 class="hero__title rise" style="--rise-delay: 80ms;">
+        LA's <span class="text-red">sewer</span>, drain &amp; <span class="text-cyan">plumbing</span> experts —<br />
+        <span class="hero__title-sub">catch costly problems before they get worse.</span>
       </h1>
 
-      <p class="hero__sub">
+      <p class="hero__sub rise" style="--rise-delay: 160ms;">
         Sewer camera inspections, hydro-jetting, trenchless repairs, and honest plumbing service for Greater Los Angeles homeowners, buyers, businesses, and realtors.
       </p>
 
-      <div class="hero__ctas">
+      <div class="hero__ctas rise" style="--rise-delay: 240ms;">
         <a class="btn btn--lg" href="tel:+13107800362">
           <Icon name="phone" size={20} /> Call Now · (310) 780-0362
         </a>
         <a class="btn btn--ghost btn--lg" href="#request-form">Request Service</a>
       </div>
 
-      <ul class="hero__checks">
+      <ul class="hero__checks rise" style="--rise-delay: 320ms;">
         <li><Icon name="check" size={18} /> Licensed &amp; Bonded</li>
         <li><Icon name="check" size={18} /> Class A General Engineering</li>
         <li><Icon name="check" size={18} /> C36 &amp; C42 Contractor</li>
@@ -36,7 +36,7 @@ import RequestForm from './RequestForm.astro';
       </ul>
     </div>
 
-    <div class="hero__form" id="request-form">
+    <div class="hero__form rise" id="request-form" style="--rise-delay: 200ms;">
       <RequestForm />
     </div>
   </div>
@@ -91,17 +91,17 @@ import RequestForm from './RequestForm.astro';
   .hero__title {
     color: #fff;
     margin: 1rem 0 1.25rem;
-    font-weight: 900;
-    line-height: 1.02;
+    font-weight: 800;
+    line-height: 1.06;
   }
   .hero__title-sub {
     display: inline-block;
-    font-size: 0.72em;
-    font-weight: 800;
-    color: #f0f2f7;
-    letter-spacing: -0.015em;
-    text-transform: uppercase;
-    margin-top: 0.4rem;
+    font-size: 0.62em;
+    font-weight: 600;
+    color: rgba(240, 242, 247, 0.85);
+    letter-spacing: -0.02em;
+    margin-top: 0.5rem;
+    line-height: 1.2;
   }
 
   .hero__sub {

@@ -5,11 +5,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const pathname = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '/';
 
 const links = [
-  { href: '/', label: 'Home' },
   { href: '/services/', label: 'Services' },
   { href: '/areas/', label: 'Service Areas' },
-  { href: '/about/', label: 'About' },
-  { href: '/contact/', label: 'Contact' },
+  { href: '/#about', label: 'About' },
+  { href: '/#contact', label: 'Contact' },
 ];
 
 function isActive(href: string): boolean {
@@ -179,11 +178,10 @@ function isActive(href: string): boolean {
   }
 
   .site-header__link {
-    font-family: var(--font-display);
-    font-weight: 700;
+    font-family: var(--font-body);
+    font-weight: 500;
     font-size: 0.95rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    letter-spacing: 0;
     color: rgba(255,255,255,0.82);
     padding: 0.5rem 0.1rem;
     position: relative;
@@ -239,12 +237,11 @@ function isActive(href: string): boolean {
     justify-content: space-between;
     padding: 0.9rem 0.75rem;
     color: rgba(255,255,255,0.85);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border-radius: 8px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0;
+    border-radius: 10px;
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
   .mobile-menu__link :global(svg) { color: var(--cyan); opacity: 0.6; }
