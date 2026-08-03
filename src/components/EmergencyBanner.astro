@@ -50,7 +50,7 @@ import Icon from './Icon.astro';
     right: -2vw;
     transform: translateY(-50%);
     font-family: var(--font-display);
-    font-weight: 900;
+    font-weight: 800;
     font-size: clamp(14rem, 28vw, 26rem);
     line-height: 0.8;
     letter-spacing: -0.04em;
@@ -113,13 +113,15 @@ import Icon from './Icon.astro';
     color: #fff;
     position: relative;
     overflow: hidden;
-    transition: transform var(--t-med), box-shadow var(--t-med), background var(--t-med);
+    transition: transform var(--t-med), box-shadow var(--t-med), background var(--t-med), opacity 0.6s var(--ease);
   }
-  .emergency__phone:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 26px 60px rgba(229,32,42,0.35), inset 0 0 60px rgba(229,32,42,0.12);
-    color: #fff;
-    background: rgba(229, 32, 42, 0.15);
+  @media (hover: hover) and (pointer: fine) {
+    .emergency__phone:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 26px 60px rgba(229,32,42,0.35), inset 0 0 60px rgba(229,32,42,0.12);
+      color: #fff;
+      background: rgba(229, 32, 42, 0.15);
+    }
   }
 
   .emergency__phone-label {
@@ -132,7 +134,7 @@ import Icon from './Icon.astro';
   }
   .emergency__phone-num {
     font-family: var(--font-display);
-    font-weight: 900;
+    font-weight: 800;
     font-size: clamp(2.2rem, 4vw + 1rem, 3.4rem);
     line-height: 1;
     letter-spacing: -0.01em;

@@ -8,8 +8,8 @@ const jobs = [
   { slot: 'b', image: 'IMG_5923.jpg', title: 'Under-Slab Repipe',                 meta: 'Cut-out + ABS rough-in' },
   { slot: 'c', image: 'IMG_5920.jpg', title: 'Full Cleanout Install',             meta: 'Trenched · new ABS wye' },
   { slot: 'd', image: 'IMG_5927.jpg', title: 'Crawlspace Drain Repipe',           meta: 'Cast iron → ABS' },
-  { slot: 'e', image: 'IMG_5926.jpg', title: 'Waste &amp; Vent Stack',                meta: 'Sub-floor access' },
-  { slot: 'f', image: 'IMG_5921.jpg', title: 'Deep Excavation &amp; Tie-In',          meta: 'City main connection' },
+  { slot: 'e', image: 'IMG_5926.jpg', title: 'Waste & Vent Stack',                  meta: 'Sub-floor access' },
+  { slot: 'f', image: 'IMG_5921.jpg', title: 'Deep Excavation & Tie-In',            meta: 'City main connection' },
 ];
 ---
 
@@ -105,7 +105,7 @@ const jobs = [
   .work__stat:nth-child(2) { border-top-color: var(--cyan); }
   .work__stat-num {
     font-family: var(--font-display);
-    font-weight: 900;
+    font-weight: 800;
     font-size: 1.75rem;
     color: var(--ink);
     letter-spacing: -0.02em;
@@ -167,9 +167,11 @@ const jobs = [
     pointer-events: none;
     z-index: 1;
   }
-  .work__tile:hover img {
-    transform: scale(1.06);
-    filter: saturate(1.1) contrast(1.08) brightness(1);
+  @media (hover: hover) and (pointer: fine) {
+    .work__tile:hover img {
+      transform: scale(1.06);
+      filter: saturate(1.1) contrast(1.08) brightness(1);
+    }
   }
 
   .work__tile-frame {
@@ -181,9 +183,11 @@ const jobs = [
     z-index: 2;
     transition: border-color var(--t-med), box-shadow var(--t-med);
   }
-  .work__tile:hover .work__tile-frame {
-    border-color: rgba(63, 194, 238, 0.65);
-    box-shadow: inset 0 0 0 1px rgba(63, 194, 238, 0.35);
+  @media (hover: hover) and (pointer: fine) {
+    .work__tile:hover .work__tile-frame {
+      border-color: rgba(63, 194, 238, 0.65);
+      box-shadow: inset 0 0 0 1px rgba(63, 194, 238, 0.35);
+    }
   }
 
   .work__caption {
@@ -207,10 +211,9 @@ const jobs = [
   }
   .work__caption strong {
     font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(0.95rem, 0.5vw + 0.75rem, 1.15rem);
-    text-transform: uppercase;
-    letter-spacing: 0.01em;
+    font-weight: 700;
+    font-size: clamp(0.95rem, 0.5vw + 0.75rem, 1.1rem);
+    letter-spacing: -0.01em;
   }
   .work__caption-meta {
     font-size: 0.75rem;

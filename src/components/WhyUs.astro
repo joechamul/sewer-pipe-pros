@@ -81,11 +81,18 @@ const reasons = [
     border: 1px solid var(--line);
     border-radius: var(--radius-card);
     padding: 1.75rem 1.5rem 1.5rem;
-    transition: transform var(--t-med), box-shadow var(--t-med);
+    transition: transform var(--t-med), box-shadow var(--t-med), opacity 0.6s var(--ease);
   }
-  .why__card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
+
+  .why__card.reveal:nth-child(1) { transition-delay: 0ms; }
+  .why__card.reveal:nth-child(2) { transition-delay: 50ms; }
+  .why__card.reveal:nth-child(3) { transition-delay: 100ms; }
+  .why__card.reveal:nth-child(n+4) { transition-delay: 150ms; }
+  @media (hover: hover) and (pointer: fine) {
+    .why__card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
   }
 
   .why__num {
@@ -93,7 +100,7 @@ const reasons = [
     top: 0.75rem;
     right: 1.25rem;
     font-family: var(--font-display);
-    font-weight: 900;
+    font-weight: 800;
     font-size: 3.25rem;
     color: var(--line);
     line-height: 1;
