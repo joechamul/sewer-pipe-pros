@@ -39,6 +39,12 @@ const { name, size = 24, class: className = '', title } = Astro.props;
       <polyline points="12 5 19 12 12 19" />
     </>
   )}
+  {name === 'arrow-left' && (
+    <>
+      <line x1="19" y1="12" x2="5" y2="12" />
+      <polyline points="12 19 5 12 12 5" />
+    </>
+  )}
   {name === 'menu' && (
     <>
       <line x1="3" y1="6" x2="21" y2="6" />

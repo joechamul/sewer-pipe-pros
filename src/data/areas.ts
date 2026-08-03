@@ -9,10 +9,10 @@ export interface Area {
 export const areas: Area[] = [
   { slug: 'los-angeles', name: 'Los Angeles', blurb: 'Citywide plumbing, drain, and sewer service across LA proper.' },
   { slug: 'downtown-la', name: 'Downtown LA', blurb: 'Commercial and residential plumbing in DTLA lofts, offices, and retail.' },
-  { slug: 'hollywood', name: 'Hollywood', blurb: 'Historic Hollywood homes and multi-unit buildings — repipes and sewer.' },
+  { slug: 'hollywood', name: 'Hollywood', blurb: 'Historic Hollywood homes and multi-unit buildings: repipes and sewer.' },
   { slug: 'west-la', name: 'West LA', blurb: 'Full-service plumbing from Sawtelle to Westwood.' },
   { slug: 'culver-city', name: 'Culver City' },
-  { slug: 'santa-monica', name: 'Santa Monica', blurb: 'Beach-adjacent plumbing — salt air, older mains, and tight access.' },
+  { slug: 'santa-monica', name: 'Santa Monica', blurb: 'Beach-adjacent plumbing: salt air, older mains, and tight access.' },
   { slug: 'venice', name: 'Venice' },
   { slug: 'beverly-hills', name: 'Beverly Hills' },
   { slug: 'brentwood', name: 'Brentwood' },

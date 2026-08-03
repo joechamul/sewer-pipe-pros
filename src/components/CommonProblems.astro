@@ -29,7 +29,7 @@ const problems = [
     title: 'Rusted Cast Iron',
     image: 'IMG_5929.jpg',
     badge: 'Crawlspace / sub-slab',
-    body: 'Cast iron rots from the inside out — the bottom of the pipe flakes away and waste flows through a rust shell. Common under mid-century homes.',
+    body: 'Cast iron rots from the inside out. The bottom of the pipe flakes away and waste flows through a rust shell. Common under mid-century homes.',
   },
   {
     n: '05',
@@ -55,31 +55,57 @@ const problems = [
       <span class="eyebrow">Field Report</span>
       <h2 id="problems-title" class="section-title">Common sewer problems we find every week.</h2>
       <p class="section-lead">
-        Every photo below is an actual Sewer Pipe Pros job in Greater LA. If your home has slow drains, gurgles, or a sewer smell in the yard — you're probably looking at one of these.
+        Every photo below is an actual Sewer Pipe Pros job in Greater LA. If your home has slow drains, gurgles, or a sewer smell in the yard, you're probably looking at one of these.
       </p>
     </header>
 
-    <div class="problems__grid">
-      {problems.map((p) => (
-        <article class="problems__card reveal">
-          <figure class="problems__figure">
-            <img
-              src={`${base}/jobs/${p.image}`}
-              alt={`${p.title} — real Sewer Pipe Pros job in Los Angeles`}
-              width="1200"
-              height="1600"
-              loading="lazy"
-              decoding="async"
-            />
-            <span class="problems__n" aria-hidden="true">{p.n}</span>
-            <span class="problems__badge">{p.badge}</span>
-          </figure>
-          <div class="problems__body">
-            <h3 class="problems__title">{p.title}</h3>
-            <p class="problems__text">{p.body}</p>
-          </div>
-        </article>
-      ))}
+    <div class="problems__carousel" data-problems-carousel>
+      <div class="problems__track" data-track tabindex="0" role="group" aria-label="Common sewer problems, scrollable">
+        {problems.map((p) => (
+          <article class="problems__card reveal" data-card>
+            <figure class="problems__figure">
+              <img
+                src={`${base}/jobs/${p.image}`}
+                alt={`${p.title}, real Sewer Pipe Pros job in Los Angeles`}
+                width="1200"
+                height="1600"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="problems__n" aria-hidden="true">{p.n}</span>
+              <span class="problems__badge">{p.badge}</span>
+            </figure>
+            <div class="problems__body">
+              <h3 class="problems__title">{p.title}</h3>
+              <p class="problems__text">{p.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="problems__controls">
+        <button type="button" class="problems__arrow" data-prev aria-label="Previous problem" disabled>
+          <Icon name="arrow-left" size={20} />
+        </button>
+
+        <div class="problems__dots" data-dots role="tablist" aria-label="Choose a problem card">
+          {problems.map((p, i) => (
+            <button
+              type="button"
+              class="problems__dot"
+              class:list={{ 'is-active': i === 0 }}
+              data-dot={i}
+              role="tab"
+              aria-selected={i === 0}
+              aria-label={`Go to ${p.title}`}
+            ></button>
+          ))}
+        </div>
+
+        <button type="button" class="problems__arrow" data-next aria-label="Next problem">
+          <Icon name="arrow-right" size={20} />
+        </button>
+      </div>
     </div>
 
     <div class="problems__cta">
@@ -95,6 +121,89 @@ const problems = [
     </div>
   </div>
 </section>
+
+<script>
+  function initProblemsCarousel() {
+    const carousel = document.querySelector<HTMLElement>('[data-problems-carousel]');
+    if (!carousel) return;
+
+    const track = carousel.querySelector<HTMLElement>('[data-track]');
+    const prevBtn = carousel.querySelector<HTMLButtonElement>('[data-prev]');
+    const nextBtn = carousel.querySelector<HTMLButtonElement>('[data-next]');
+    const dots = Array.from(carousel.querySelectorAll<HTMLButtonElement>('[data-dot]'));
+    if (!track) return;
+
+    const cards = Array.from(track.querySelectorAll<HTMLElement>('[data-card]'));
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const scrollByCard = (dir: 1 | -1) => {
+      const card = cards[0];
+      if (!card) return;
+      const gap = parseFloat(getComputedStyle(track).columnGap || '0');
+      const amount = (card.getBoundingClientRect().width + gap) * dir;
+      track.scrollBy({ left: amount, behavior: reduceMotion ? 'auto' : 'smooth' });
+    };
+
+    prevBtn?.addEventListener('click', () => scrollByCard(-1));
+    nextBtn?.addEventListener('click', () => scrollByCard(1));
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        cards[i]?.scrollIntoView({
+          behavior: reduceMotion ? 'auto' : 'smooth',
+          inline: 'start',
+          block: 'nearest',
+        });
+      });
+    });
+
+    const updateArrows = () => {
+      const maxScroll = track.scrollWidth - track.clientWidth - 1;
+      if (prevBtn) prevBtn.disabled = track.scrollLeft <= 0;
+      if (nextBtn) nextBtn.disabled = track.scrollLeft >= maxScroll;
+    };
+
+    let rafId: number | null = null;
+    track.addEventListener(
+      'scroll',
+      () => {
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => {
+          updateArrows();
+          rafId = null;
+        });
+      },
+      { passive: true }
+    );
+
+    if ('IntersectionObserver' in window && dots.length) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+              const idx = cards.indexOf(entry.target as HTMLElement);
+              dots.forEach((d, i) => {
+                d.classList.toggle('is-active', i === idx);
+                d.setAttribute('aria-selected', String(i === idx));
+              });
+            }
+          }
+        },
+        { root: track, threshold: [0.6] }
+      );
+      cards.forEach((c) => io.observe(c));
+    }
+
+    updateArrows();
+    window.addEventListener('resize', updateArrows, { passive: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProblemsCarousel);
+  } else {
+    initProblemsCarousel();
+  }
+</script>
 
 <style>
   .problems {
@@ -129,22 +238,47 @@ const problems = [
     margin-bottom: 3rem;
   }
 
-  .problems__grid {
+  /* ─── Carousel ───────────────────────────────────────────── */
+  .problems__carousel {
     position: relative;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
   }
-  @media (max-width: 900px) { .problems__grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .problems__grid { grid-template-columns: 1fr; } }
+
+  .problems__track {
+    position: relative;
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    padding-bottom: 0.25rem;
+    margin-bottom: 1.25rem;
+    /* Fade the trailing edge so the peeking card reads as "more content" */
+    mask-image: linear-gradient(90deg, #000 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent 100%);
+  }
+  .problems__track::-webkit-scrollbar { display: none; }
+  .problems__track { scrollbar-width: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .problems__track { scroll-behavior: auto; }
+  }
 
   .problems__card {
     position: relative;
+    flex: 0 0 82%;
+    scroll-snap-align: start;
     background: #15171f;
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: var(--radius-card);
     overflow: hidden;
-    transition: transform var(--t-med), border-color var(--t-med), box-shadow var(--t-med), opacity 0.6s var(--ease);
+    transition: border-color var(--t-med), box-shadow var(--t-med), opacity 0.6s var(--ease);
+  }
+  @media (min-width: 640px) {
+    .problems__card { flex-basis: 46%; }
+  }
+  @media (min-width: 1000px) {
+    .problems__card { flex-basis: 31%; }
   }
 
   .problems__card.reveal:nth-child(1) { transition-delay: 0ms; }
@@ -153,7 +287,6 @@ const problems = [
   .problems__card.reveal:nth-child(n+4) { transition-delay: 150ms; }
   @media (hover: hover) and (pointer: fine) {
     .problems__card:hover {
-      transform: translateY(-4px);
       border-color: rgba(63, 194, 238, 0.35);
       box-shadow: 0 24px 48px -20px rgba(0,0,0,0.8);
     }
@@ -167,6 +300,61 @@ const problems = [
     opacity: 0.7;
     z-index: 2;
   }
+
+  /* ─── Controls: prev arrow · dots · next arrow ─────────────── */
+  .problems__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+  }
+
+  .problems__arrow {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: #fff;
+    transition: transform 140ms var(--ease-out), background var(--t-fast), border-color var(--t-fast), opacity var(--t-fast);
+  }
+  .problems__arrow:focus-visible { border-radius: 999px; }
+  @media (hover: hover) and (pointer: fine) {
+    .problems__arrow:hover:not(:disabled) {
+      background: rgba(63, 194, 238, 0.14);
+      border-color: rgba(63, 194, 238, 0.4);
+    }
+  }
+  .problems__arrow:active:not(:disabled) { transform: scale(0.92); }
+  .problems__arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .problems__dots {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .problems__dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.2);
+    transition: transform 140ms var(--ease-out), background var(--t-fast), width var(--t-fast);
+  }
+  .problems__dot.is-active {
+    width: 22px;
+    background: var(--cyan);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .problems__dot:hover:not(.is-active) { background: rgba(255,255,255,0.4); }
+  }
+  .problems__dot:active { transform: scale(0.9); }
 
   .problems__figure {
     position: relative;

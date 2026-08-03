@@ -28,7 +28,7 @@ export const services: Service[] = [
     icon: 'pipe',
     shortDescription:
       'Replace broken sewer lines without digging up your yard, driveway, or landscaping.',
-    longDescription: `Trenchless sewer repair lets us restore your main line with little to no excavation — ideal for homes with mature landscaping, hardscape, or driveways you don't want to tear up.
+    longDescription: `Trenchless sewer repair lets us restore your main line with little to no excavation, ideal for homes with mature landscaping, hardscape, or driveways you don't want to tear up.
 
 We use pipe bursting and cured-in-place pipe (CIPP) lining to replace or reline cracked, collapsed, or root-damaged sewer lines in a fraction of the time of traditional dig-and-replace methods.
 
@@ -39,11 +39,11 @@ We use pipe bursting and cured-in-place pipe (CIPP) lining to replace or reline 
 - Commercial properties where downtime is costly
 
 ### Our process
-1. **Camera inspection** — we scope the entire line and locate the failure
-2. **Scope and quote** — clear, upfront pricing with no surprises
-3. **Access points** — typically two small pits instead of a full trench
-4. **Liner install or pipe burst** — new pipe pulled through or cured in place
-5. **Final inspection** — we re-scope and walk you through the footage`,
+1. **Camera inspection**: we scope the entire line and locate the failure
+2. **Scope and quote**: clear, upfront pricing with no surprises
+3. **Access points**: typically two small pits instead of a full trench
+4. **Liner install or pipe burst**: new pipe pulled through or cured in place
+5. **Final inspection**: we re-scope and walk you through the footage`,
   },
   {
     slug: 'hydro-jetting',
@@ -52,7 +52,7 @@ We use pipe bursting and cured-in-place pipe (CIPP) lining to replace or reline 
     icon: 'spray',
     shortDescription:
       'High-pressure water jetting scours grease, roots, and scale out of drain and sewer lines.',
-    longDescription: `Hydro-jetting blasts drain and sewer lines clean with 3,500–4,000 PSI of water — safer than chemical drain cleaners and more thorough than a standard snake.
+    longDescription: `Hydro-jetting blasts drain and sewer lines clean with 3,500–4,000 PSI of water, safer than chemical drain cleaners and more thorough than a standard snake.
 
 ### Ideal for
 - Grease-loaded kitchen lines
@@ -62,7 +62,7 @@ We use pipe bursting and cured-in-place pipe (CIPP) lining to replace or reline 
 - Recurring slow drains that snake out but keep clogging
 
 ### What to expect
-We start with a camera inspection to confirm the pipe is suitable for jetting, then match the nozzle and pressure to the line material. After the job, we re-scope to prove the pipe is clean — not just flowing.`,
+We start with a camera inspection to confirm the pipe is suitable for jetting, then match the nozzle and pressure to the line material. After the job, we re-scope to prove the pipe is clean, not just flowing.`,
   },
   {
     slug: 'sewer-video-camera-inspection',
@@ -92,7 +92,7 @@ We start with a camera inspection to confirm the pipe is suitable for jetting, t
     icon: 'drain',
     shortDescription:
       'Fast, no-mess clearing of slow or stopped-up kitchen, bathroom, and laundry drains.',
-    longDescription: `Sinks, tubs, showers, floor drains, and laundry lines clog up — usually from hair, grease, soap scum, or foreign objects. We clear them the right way: mechanically, with the correct cable and head for the line.
+    longDescription: `Sinks, tubs, showers, floor drains, and laundry lines clog up, usually from hair, grease, soap scum, or foreign objects. We clear them the right way: mechanically, with the correct cable and head for the line.
 
 ### Why not chemical drain cleaner?
 Over-the-counter drain chemicals corrode old pipes, damage finishes, and often only clear a small channel in the clog that re-closes within days. A proper mechanical cleaning removes the blockage completely.
@@ -111,7 +111,7 @@ Over-the-counter drain chemicals corrode old pipes, damage finishes, and often o
     icon: 'tools',
     shortDescription:
       'Locate and repair breaks, bellies, and root damage in your main sewer line.',
-    longDescription: `Whether you need a spot repair, a full replacement, or a trenchless liner, we diagnose sewer line failures from root cause — not just the symptom.
+    longDescription: `Whether you need a spot repair, a full replacement, or a trenchless liner, we diagnose sewer line failures from root cause, not just the symptom.
 
 ### Common failures
 - Roots wedging joints apart and invading the line
@@ -129,7 +129,7 @@ We'll walk you through the camera footage, explain what we see, and quote option
     icon: 'tank',
     shortDescription:
       'Diagnosis and repair for septic systems that are slow, backing up, or failing inspection.',
-    longDescription: `If your system isn't on city sewer, a failing septic tank is a serious problem — slow drains, odors, or pooling in the yard all point to trouble.
+    longDescription: `If your system isn't on city sewer, a failing septic tank is a serious problem: slow drains, odors, or pooling in the yard all point to trouble.
 
 We diagnose and repair:
 - Inlet and outlet baffle failures
@@ -148,7 +148,7 @@ We work with licensed pumpers and inspectors and will coordinate the full repair
     category: 'water',
     icon: 'flame',
     shortDescription:
-      'Same-day water heater repair or code-compliant tank replacement — gas or electric.',
+      'Same-day water heater repair or code-compliant tank replacement, gas or electric.',
     longDescription: `No hot water, rusty water, or a leaking tank? We service every major brand and carry common replacement parts in the truck.
 
 ### What we do
@@ -156,7 +156,7 @@ We work with licensed pumpers and inspectors and will coordinate the full repair
 - Thermocouple, gas valve, and heating element replacement
 - Anode rod replacement to extend tank life
 - T&P valve and expansion tank service
-- Full tank replacement — gas or electric
+- Full tank replacement, gas or electric
 - Seismic strapping and code-compliant install
 
 All installs include proper venting, earthquake strapping, and pan/drain where required by LADBS.`,
@@ -167,13 +167,13 @@ All installs include proper venting, earthquake strapping, and pan/drain where r
     category: 'water',
     icon: 'zap',
     shortDescription:
-      'Endless hot water, more floor space, lower gas bills — properly sized and vented.',
-    longDescription: `A tankless water heater heats water on demand — you get endless hot water, reclaim the footprint of an old tank, and typically cut water-heating gas usage 20–40%.
+      'Endless hot water, more floor space, lower gas bills, properly sized and vented.',
+    longDescription: `A tankless water heater heats water on demand. You get endless hot water, reclaim the footprint of an old tank, and typically cut water-heating gas usage 20–40%.
 
 ### We handle the full install
 - Load calc and sizing based on your fixtures and flow rates
 - Gas line upgrade if needed (tankless units need more BTU input)
-- Dedicated venting — typically concentric PVC/polypropylene
+- Dedicated venting, typically concentric PVC/polypropylene
 - Recirculation option for instant hot at distant fixtures
 - Descaling setup and annual maintenance plan
 
@@ -186,7 +186,7 @@ We'll walk you through brands and sizes and recommend what actually fits your ho
     icon: 'zap',
     shortDescription:
       'Authorized Noritz installation, service, and warranty work for residential and commercial.',
-    longDescription: `Noritz tankless systems are a workhorse for California homes — high efficiency, long warranties, and excellent parts availability.
+    longDescription: `Noritz tankless systems are a workhorse for California homes: high efficiency, long warranties, and excellent parts availability.
 
 ### Why Noritz
 - Efficiency up to 0.96 UEF
@@ -235,8 +235,8 @@ We install Noritz direct-vent and outdoor units, handle recirculation pumps and 
     category: 'water',
     icon: 'sprinkler',
     shortDescription:
-      'Leaking valves, broken heads, dead zones, or a whole new system — we handle irrigation plumbing.',
-    longDescription: `We work on the plumbing side of irrigation — PVC, copper, backflow preventers, valves, and controller wiring to the valves. For design-heavy landscape builds we partner with licensed landscape contractors.
+      'Leaking valves, broken heads, dead zones, or a whole new system: we handle irrigation plumbing.',
+    longDescription: `We work on the plumbing side of irrigation: PVC, copper, backflow preventers, valves, and controller wiring to the valves. For design-heavy landscape builds we partner with licensed landscape contractors.
 
 ### Common fixes
 - Leaking valve manifolds
@@ -254,7 +254,7 @@ We install Noritz direct-vent and outdoor units, handle recirculation pumps and 
     category: 'pipe',
     icon: 'pipe',
     shortDescription:
-      'Full-home copper repipes and new copper installations — clean routing, soldered joints, code-compliant.',
+      'Full-home copper repipes and new copper installations: clean routing, soldered joints, code-compliant.',
     longDescription: `Old galvanized and polybutylene pipes corrode, restrict flow, and eventually leak. A whole-home copper repipe restores pressure, improves water quality, and removes a major source of insurance claims.
 
 ### What's included
@@ -305,7 +305,7 @@ We use expansion-style fittings (Uponor ProPEX) for long-term, leak-resistant co
     category: 'pipe',
     icon: 'hammer',
     shortDescription:
-      'Replace sewer or water lines in place — no full trench, no yard destruction.',
+      'Replace sewer or water lines in place, no full trench, no yard destruction.',
     longDescription: `Pipe bursting pulls a new HDPE or PE pipe through the path of the old one, fracturing the original pipe outward as it goes. The result: a brand-new line with only two small access pits.
 
 ### Why choose pipe bursting over open-cut?
@@ -321,7 +321,7 @@ We use expansion-style fittings (Uponor ProPEX) for long-term, leak-resistant co
     icon: 'flame',
     shortDescription:
       'Licensed gas line repair, extensions, and leak diagnosis for homes and businesses.',
-    longDescription: `Gas leaks are a safety issue — we respond fast, perform a proper leak search, and repair or replace the affected line with black iron or CSST.
+    longDescription: `Gas leaks are a safety issue. We respond fast, perform a proper leak search, and repair or replace the affected line with black iron or CSST.
 
 ### Services
 - Pressure testing and leak isolation
@@ -340,14 +340,14 @@ All gas work is performed by licensed techs under the C36 classification.`,
     category: 'fixture',
     icon: 'toilet',
     shortDescription:
-      'Leaks, running, rocking, or weak flush — we repair or replace any toilet, any brand.',
-    longDescription: `A constantly running or leaking toilet wastes water and can damage your floor and subfloor. We diagnose and fix the issue — not just replace the flapper and hope.
+      'Leaks, running, rocking, or weak flush: we repair or replace any toilet, any brand.',
+    longDescription: `A constantly running or leaking toilet wastes water and can damage your floor and subfloor. We diagnose and fix the issue, not just replace the flapper and hope.
 
 ### Common fixes
 - Running toilet and flapper/fill valve replacement
 - Leaking wax ring and re-set on a new flange
-- Loose or rocking toilet — we check the flange height and floor condition
-- Cracked tank or bowl — replacement recommendations
+- Loose or rocking toilet: we check the flange height and floor condition
+- Cracked tank or bowl: replacement recommendations
 - Elongated, ADA-height, and dual-flush installs`,
   },
   {
@@ -357,7 +357,7 @@ All gas work is performed by licensed techs under the C36 classification.`,
     icon: 'shower',
     shortDescription:
       'Valve replacement, clog clearing, leak diagnosis, and fixture upgrades.',
-    longDescription: `We service shower and tub plumbing — valves, diverters, drains, and supply lines — for every major brand (Moen, Delta, Kohler, Grohe, Hansgrohe).
+    longDescription: `We service shower and tub plumbing (valves, diverters, drains, and supply lines) for every major brand (Moen, Delta, Kohler, Grohe, Hansgrohe).
 
 ### Services
 - Drippy or frozen shower/tub valve rebuilds
@@ -374,12 +374,12 @@ All gas work is performed by licensed techs under the C36 classification.`,
     icon: 'cog',
     shortDescription:
       'Jammed, leaking, or dead disposal? We repair or replace with the right size unit.',
-    longDescription: `A garbage disposal should last 8–12 years. When yours goes, we'll size the replacement to your household and install it right — no leaks, no hums.
+    longDescription: `A garbage disposal should last 8–12 years. When yours goes, we'll size the replacement to your household and install it right, no leaks, no hums.
 
 ### Services
 - Disposal unjamming and reset
 - Leak diagnosis (top flange, side flange, bottom housing)
-- Full unit replacement — 1/2, 3/4, or 1 HP
+- Full unit replacement: 1/2, 3/4, or 1 HP
 - Dishwasher tie-in and air gap work
 - Hardwired or plug-in conversion`,
   },
@@ -390,7 +390,7 @@ All gas work is performed by licensed techs under the C36 classification.`,
     icon: 'kitchen',
     shortDescription:
       'Dishwasher install and removal, hot/cold supply lines, shutoffs, and ice maker lines.',
-    longDescription: `We handle the plumbing side of kitchen appliances — supply lines, shutoff valves, drain tie-ins, and air gaps.
+    longDescription: `We handle the plumbing side of kitchen appliances: supply lines, shutoff valves, drain tie-ins, and air gaps.
 
 ### Scope
 - Dishwasher install and haul-away
@@ -407,11 +407,11 @@ All gas work is performed by licensed techs under the C36 classification.`,
     icon: 'home',
     shortDescription:
       'Full-service plumbing for single-family homes, condos, townhomes, and ADUs.',
-    longDescription: `Whether you need a quick fix or a full remodel rough-in, we handle residential plumbing from top to bottom — fixtures, water, drains, gas, water heaters, and sewer.
+    longDescription: `Whether you need a quick fix or a full remodel rough-in, we handle residential plumbing from top to bottom: fixtures, water, drains, gas, water heaters, and sewer.
 
 ### How we work with homeowners
 - Upfront flat-rate pricing before work starts
-- Clean, respectful technicians — shoe covers, drop cloths, we clean up
+- Clean, respectful technicians: shoe covers, drop cloths, we clean up
 - Proper permits pulled for work that requires them
 - Warranty on parts and labor
 - Single point of contact from quote to completion`,
@@ -423,7 +423,7 @@ All gas work is performed by licensed techs under the C36 classification.`,
     icon: 'building',
     shortDescription:
       'Restaurants, offices, retail, and industrial plumbing with minimal downtime.',
-    longDescription: `Commercial plumbing has different stakes — downtime costs revenue, code compliance is stricter, and the work has to fit around your operations.
+    longDescription: `Commercial plumbing has different stakes: downtime costs revenue, code compliance is stricter, and the work has to fit around your operations.
 
 ### Commercial specialties
 - Restaurant grease lines and hydro-jetting maintenance plans
@@ -439,7 +439,7 @@ All gas work is performed by licensed techs under the C36 classification.`,
     category: 'fixture',
     icon: 'key',
     shortDescription:
-      'One call, one reliable crew — for every unit and every property in your portfolio.',
+      'One call, one reliable crew, for every unit and every property in your portfolio.',
     longDescription: `Managing multiple properties means you can't chase down a different plumber for every call. We work with property managers across LA to handle tenant calls, turnovers, and capital improvements.
 
 ### What you get
