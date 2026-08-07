@@ -27,6 +27,8 @@ import {
   alwaysOpenHours,
   postalAddress,
   geoCoordinates,
+  contactPoint,
+  KNOWS_ABOUT,
 } from '../data/business';
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
@@ -49,6 +51,8 @@ const jsonLd = {
   areaServed: areas.map((a) => ({ '@type': 'City', name: a.name })),
   address: postalAddress(),
   geo: geoCoordinates(),
+  contactPoint: contactPoint(),
+  knowsAbout: KNOWS_ABOUT,
   openingHoursSpecification: [alwaysOpenHours()],
   paymentAccepted: 'Cash, Check, Credit Card, Debit Card',
   currenciesAccepted: 'USD',

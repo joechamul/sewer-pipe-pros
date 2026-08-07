@@ -128,6 +128,37 @@ export function postalAddress() {
   };
 }
 
+/**
+ * Topics the business is an authority on. Search + AI answer engines use
+ * `knowsAbout` to understand entity expertise and decide what to recommend it
+ * for. Keep every item to something we genuinely do.
+ */
+export const KNOWS_ABOUT = [
+  'Trenchless sewer line repair',
+  'Sewer line replacement',
+  'Hydro-jetting',
+  'Sewer video camera inspection',
+  'Drain cleaning',
+  'Water heater installation and repair',
+  'Tankless water heaters',
+  'Copper and PEX repiping',
+  'Gas line repair',
+  'Slab leak detection and repair',
+  'Residential plumbing',
+  'Commercial plumbing',
+] as const;
+
+/** Contact point node for the business. */
+export function contactPoint() {
+  return {
+    '@type': 'ContactPoint',
+    telephone: BUSINESS.telephone,
+    contactType: 'customer service',
+    areaServed: 'US-CA',
+    availableLanguage: ['English'],
+  };
+}
+
 /** Geo point for the business (central LA). */
 export function geoCoordinates() {
   return {
