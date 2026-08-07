@@ -1,4 +1,43 @@
+# Sewer Pipe Pros Inc. — https://sewerpipepros.com
+# All crawlers, including AI answer engines, are welcome to index and cite this site.
+
 User-agent: *
 Allow: /
 
+# ── AI / LLM crawlers (explicitly allowed so we can be surfaced & cited) ──
+# OpenAI (ChatGPT / SearchGPT)
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+
+# Google (AI Overviews / Gemini) & Apple Intelligence
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+# Microsoft Copilot / Bing & Common Crawl (feeds many models)
+User-agent: CCBot
+Allow: /
+User-agent: Amazonbot
+Allow: /
+
+# Plain-text summary for LLMs: https://sewerpipepros.com/llms.txt
 Sitemap: https://sewerpipepros.com/sitemap-index.xml
