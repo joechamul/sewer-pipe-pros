@@ -70,7 +70,7 @@ const {
     </div>
 
     <div class="services__more-row" data-more-row hidden>
-      <button type="button" class="services__show-more" data-show-more aria-expanded="false">
+      <button type="button" class="btn btn--ghost-dark services__show-more" data-show-more aria-expanded="false">
         <span data-show-more-label>Show More</span>
         <svg
           class="services__show-more-icon"
@@ -253,37 +253,6 @@ const {
   /* [hidden] would normally be overridden by display:flex — force it off. */
   .services__more-row[hidden] {
     display: none !important;
-  }
-
-  .services__show-more {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.4rem;
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--ink);
-    background: #fff;
-    border: 1.5px solid var(--ink);
-    border-radius: 999px;
-    box-shadow: 0 4px 0 var(--ink);
-    transition:
-      transform var(--t-fast),
-      box-shadow var(--t-fast),
-      background var(--t-fast),
-      color var(--t-fast);
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .services__show-more:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 0 var(--ink);
-      background: var(--ink);
-      color: #fff;
-    }
-  }
-  .services__show-more:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 0 var(--ink);
   }
 
   .services__show-more-icon {
