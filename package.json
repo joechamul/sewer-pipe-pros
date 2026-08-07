@@ -1,7 +1,7 @@
 {
   "name": "sewer-pipe-pros",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Sewer Pipe Pros Inc. — Licensed Los Angeles plumbing, drain & sewer contractor.",
   "scripts": {
@@ -9,7 +9,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
