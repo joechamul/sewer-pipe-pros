@@ -14,9 +14,20 @@ import ServicesGrid from '../components/ServicesGrid.astro';
 import EmergencyBanner from '../components/EmergencyBanner.astro';
 import WhyUs from '../components/WhyUs.astro';
 import Reviews from '../components/Reviews.astro';
-import ServiceAreas from '../components/ServiceAreas.astro';
+import FAQ from '../components/FAQ.astro';
 import ContactSection from '../components/ContactSection.astro';
 import { areas } from '../data/areas';
+import {
+  BUSINESS,
+  businessId,
+  aggregateRating,
+  reviewSchema,
+  offerCatalog,
+  licenseCredential,
+  alwaysOpenHours,
+  postalAddress,
+  geoCoordinates,
+} from '../data/business';
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -24,49 +35,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Plumber',
-  '@id': `${siteUrl}${base}/#business`,
-  name: 'Sewer Pipe Pros Inc.',
-  alternateName: 'Sewer Pipe Pros',
+  '@id': businessId(siteUrl, base),
+  name: BUSINESS.name,
+  alternateName: BUSINESS.alternateName,
   description:
     "Sewer Pipe Pros Inc. is a licensed Los Angeles plumbing, drain, and sewer contractor serving Greater LA. Lic. #1126184, C36 & C42.",
   url: `${siteUrl}${base}/`,
-  telephone: '+1-310-780-0362',
-  priceRange: '$$',
+  telephone: BUSINESS.telephone,
+  priceRange: BUSINESS.priceRange,
   image: `${siteUrl}${base}/logo.png`,
   logo: `${siteUrl}${base}/logo.png`,
-  slogan: 'We Serve Differently',
-  areaServed: areas.map((a) => ({
-    '@type': 'City',
-    name: a.name,
-  })),
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Los Angeles',
-    addressRegion: 'CA',
-    addressCountry: 'US',
-  },
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: [
-        'Monday', 'Tuesday', 'Wednesday',
-        'Thursday', 'Friday', 'Saturday', 'Sunday',
-      ],
-      opens: '00:00',
-      closes: '23:59',
-    },
-  ],
-  sameAs: [
-    'https://www.yelp.com/biz/sewer-pipe-pros-los-angeles',
-  ],
-  hasCredential: [
-    {
-      '@type': 'EducationalOccupationalCredential',
-      name: 'California Contractor License #1126184',
-      credentialCategory: 'License',
-      educationalLevel: 'C36 Plumbing Contractor, C42 Sanitation Systems Contractor',
-    },
-  ],
+  slogan: BUSINESS.slogan,
+  areaServed: areas.map((a) => ({ '@type': 'City', name: a.name })),
+  address: postalAddress(),
+  geo: geoCoordinates(),
+  openingHoursSpecification: [alwaysOpenHours()],
+  paymentAccepted: 'Cash, Check, Credit Card, Debit Card',
+  currenciesAccepted: 'USD',
+  sameAs: BUSINESS.sameAs,
+  hasCredential: [licenseCredential()],
+  hasOfferCatalog: offerCatalog(siteUrl, base),
+  aggregateRating: aggregateRating(),
+  review: reviewSchema(),
 };
 ---
 
@@ -89,8 +79,8 @@ const jsonLd = {
     <RealtorSection />
     <EmergencyBanner />
     <AboutSection />
-    <ServiceAreas showGrid={false} />
     <ContactSection />
+    <FAQ />
   </main>
 
   <Footer />

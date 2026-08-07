@@ -6,6 +6,7 @@ import StickyCall from '../components/StickyCall.astro';
 import RequestForm from '../components/RequestForm.astro';
 import Icon from '../components/Icon.astro';
 import { services } from '../data/services';
+import { areas } from '../data/areas';
 
 export interface Props {
   title: string;
@@ -24,6 +25,10 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const related = services
   .filter((s) => s.category === category && s.slug !== slug)
   .slice(0, 6);
+
+// Cross-link to top service-area pages so link authority flows between the
+// service and the cities where we offer it.
+const topAreas = areas.slice(0, 10);
 
 const jsonLd = [
   {
@@ -110,6 +115,19 @@ const jsonLd = [
             )}
             <a class="btn btn--ghost-dark btn--block" href={`${base}/services/`} style="margin-top:1rem">
               View All Services
+            </a>
+          </div>
+
+          <div class="svc-aside__card">
+            <span class="eyebrow">Where we work</span>
+            <h3>{heading} in your area</h3>
+            <ul class="svc-aside__areas">
+              {topAreas.map((a) => (
+                <li><a href={`${base}/areas/${a.slug}/`}>{a.name}</a></li>
+              ))}
+            </ul>
+            <a class="btn btn--ghost-dark btn--block" href={`${base}/areas/`} style="margin-top:1rem">
+              All Service Areas
             </a>
           </div>
 
@@ -288,6 +306,29 @@ const jsonLd = [
   .svc-aside__list a:hover { background: var(--paper); color: var(--red); }
   .svc-aside__list .arrow { margin-left: auto; color: var(--muted); }
   .svc-aside__list a:hover .arrow { color: var(--red); }
+
+  .svc-aside__areas {
+    list-style: none;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .svc-aside__areas a {
+    display: inline-block;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--ink);
+    transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+  }
+  .svc-aside__areas a:hover {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+  }
 
   .svc-request {
     display: grid;

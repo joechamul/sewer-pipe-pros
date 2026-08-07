@@ -1,0 +1,136 @@
+---
+import { faqs } from '../data/faqs';
+
+export interface Props {
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+}
+
+const {
+  eyebrow = 'FAQ',
+  title = 'Common questions about LA plumbing & sewer work.',
+  lead = 'Straight answers on cost, permits, emergencies, and what to expect. Still not sure? Call us — the advice is free.',
+} = Astro.props;
+
+// FAQPage structured data — makes these eligible for rich results and
+// People-Also-Ask placements in Google.
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+    },
+  })),
+};
+---
+
+<section class="faq section" id="faq" aria-labelledby="faq-title">
+  <div class="container faq__inner">
+    <header class="faq__header">
+      <span class="eyebrow">{eyebrow}</span>
+      <h2 id="faq-title" class="section-title">{title}</h2>
+      <p class="section-lead">{lead}</p>
+    </header>
+
+    <div class="faq__list">
+      {faqs.map((f, i) => (
+        <details class="faq__item" open={i === 0}>
+          <summary class="faq__q">
+            <span>{f.question}</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="faq__a">
+            <p>{f.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+</section>
+
+<style>
+  .faq {
+    background: var(--paper);
+  }
+  .faq__inner {
+    max-width: 860px;
+  }
+  .faq__header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .faq__header .section-lead {
+    margin-inline: auto;
+    max-width: 56ch;
+  }
+
+  .faq__list {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .faq__item {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .faq__item[open] {
+    border-color: var(--cyan);
+  }
+
+  .faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.15rem 1.35rem;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+  .faq__q::-webkit-details-marker { display: none; }
+  .faq__q:hover { color: var(--red); }
+
+  .faq__icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+  .faq__icon::before,
+  .faq__icon::after {
+    content: '';
+    position: absolute;
+    background: var(--red);
+    border-radius: 2px;
+    transition: transform var(--t-fast, 0.18s) ease, opacity var(--t-fast, 0.18s) ease;
+  }
+  .faq__icon::before {
+    top: 9px; left: 2px; right: 2px; height: 2px;
+  }
+  .faq__icon::after {
+    left: 9px; top: 2px; bottom: 2px; width: 2px;
+  }
+  .faq__item[open] .faq__icon::after { transform: scaleY(0); opacity: 0; }
+
+  .faq__a {
+    padding: 0 1.35rem 1.25rem;
+  }
+  .faq__a p {
+    margin: 0;
+    color: #3a3f4c;
+    line-height: 1.6;
+  }
+</style>

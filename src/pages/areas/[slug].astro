@@ -7,6 +7,14 @@ import ServicesGrid from '../../components/ServicesGrid.astro';
 import ContactSection from '../../components/ContactSection.astro';
 import Icon from '../../components/Icon.astro';
 import { areas } from '../../data/areas';
+import {
+  BUSINESS,
+  businessId,
+  licenseCredential,
+  alwaysOpenHours,
+  postalAddress,
+  geoCoordinates,
+} from '../../data/business';
 
 export function getStaticPaths() {
   return areas.map((area) => ({
@@ -22,40 +30,30 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const defaultBlurb = `Licensed plumbing, drain, and sewer service in ${area.name}, California. Homes, apartments, and commercial properties: we handle everything from slow drains to trenchless sewer replacement.`;
 const blurb = area.blurb ?? defaultBlurb;
 
+const defaultContext = `Every LA neighborhood has its own plumbing story: older clay sewer laterals, cast iron drains, slab construction, tight alley access. We've worked in ${area.name} long enough to know what to expect before we arrive.`;
+const context = area.context ?? defaultContext;
+
 const description = `Plumbing in ${area.name}, CA. Licensed LA contractor (#1126184) handling drain cleaning, trenchless sewer, water heaters, repipes & more. Call (310) 780-0362.`;
 
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'Plumber',
-    '@id': `${siteUrl}${base}/areas/${area.slug}/#business`,
-    name: 'Sewer Pipe Pros Inc.',
+    // Same canonical business entity as the homepage — this page just documents
+    // the service in this particular city via areaServed.
+    '@id': businessId(siteUrl, base),
+    name: BUSINESS.name,
     description,
     url: `${siteUrl}${base}/areas/${area.slug}/`,
-    telephone: '+1-310-780-0362',
-    priceRange: '$$',
+    telephone: BUSINESS.telephone,
+    priceRange: BUSINESS.priceRange,
     image: `${siteUrl}${base}/logo.png`,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Los Angeles',
-      addressRegion: 'CA',
-      addressCountry: 'US',
-    },
+    address: postalAddress(),
+    geo: geoCoordinates(),
     areaServed: { '@type': 'City', name: area.name, containedInPlace: { '@type': 'State', name: 'California' } },
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-        opens: '00:00',
-        closes: '23:59',
-      },
-    ],
-    hasCredential: {
-      '@type': 'EducationalOccupationalCredential',
-      name: 'California Contractor License #1126184',
-      credentialCategory: 'License',
-      educationalLevel: 'C36 Plumbing Contractor, C42 Sanitation Systems Contractor',
-    },
+    openingHoursSpecification: [alwaysOpenHours()],
+    sameAs: BUSINESS.sameAs,
+    hasCredential: licenseCredential(),
   },
   {
     '@context': 'https://schema.org',
@@ -116,14 +114,14 @@ const jsonLd = [
         <div class="area-body__col reveal">
           <span class="eyebrow">Local Service</span>
           <h2>What {area.name} homeowners call us for.</h2>
-          <p>Every LA neighborhood has its own plumbing story: older clay sewer laterals, cast iron drains, slab construction, tight alley access. We've worked in {area.name} long enough to know what to expect before we arrive.</p>
+          <p>{context}</p>
           <ul class="area-body__list">
-            <li><Icon name="check" size={18} /><span>Trenchless sewer repair &amp; replacement</span></li>
-            <li><Icon name="check" size={18} /><span>Drain cleaning, hydro-jetting &amp; video inspection</span></li>
-            <li><Icon name="check" size={18} /><span>Tank &amp; tankless water heater service</span></li>
-            <li><Icon name="check" size={18} /><span>Copper &amp; PEX repipes</span></li>
-            <li><Icon name="check" size={18} /><span>Gas line repair (C36 licensed)</span></li>
-            <li><Icon name="check" size={18} /><span>Fixture &amp; appliance work</span></li>
+            <li><Icon name="check" size={18} /><a href={`${base}/services/trenchless-sewer-line-repair/`}>Trenchless sewer repair &amp; replacement</a></li>
+            <li><Icon name="check" size={18} /><a href={`${base}/services/hydro-jetting/`}>Drain cleaning, hydro-jetting &amp; video inspection</a></li>
+            <li><Icon name="check" size={18} /><a href={`${base}/services/water-heater-installation-repair/`}>Tank &amp; tankless water heater service</a></li>
+            <li><Icon name="check" size={18} /><a href={`${base}/services/copper-repiping/`}>Copper &amp; PEX repipes</a></li>
+            <li><Icon name="check" size={18} /><a href={`${base}/services/gas-line-repair/`}>Gas line repair (C36 licensed)</a></li>
+            <li><Icon name="check" size={18} /><a href={`${base}/services/residential-plumbing/`}>Fixture &amp; appliance work</a></li>
           </ul>
         </div>
         <aside class="area-body__cta reveal">
@@ -226,7 +224,13 @@ const jsonLd = [
     gap: 0.5rem;
   }
   .area-body__list li { display: flex; align-items: center; gap: 0.5rem; }
-  .area-body__list :global(svg) { color: var(--red); }
+  .area-body__list :global(svg) { color: var(--red); flex-shrink: 0; }
+  .area-body__list a {
+    color: var(--ink);
+    text-decoration: none;
+    transition: color var(--t-fast, 0.18s) ease;
+  }
+  .area-body__list a:hover { color: var(--red); text-decoration: underline; }
 
   .area-body__cta {
     background: var(--ink);
