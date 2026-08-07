@@ -1,0 +1,10 @@
+#!/bin/sh
+# Auto-bump the version on every commit and stage the change so it lands in the
+# same commit. Configured via `git config core.hooksPath .githooks` (set
+# automatically by the `prepare` npm script on install).
+
+node scripts/bump-version.mjs || {
+  echo "pre-commit: version bump failed" >&2
+  exit 1
+}
+git add package.json
