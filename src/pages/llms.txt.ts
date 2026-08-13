@@ -88,6 +88,8 @@ export const GET: APIRoute = ({ site }) => {
   lines.push('## Contact');
   lines.push(`- Call or text: ${BUSINESS.telDisplay}`);
   lines.push(`- Request service online: ${base}/#request-form`);
+  lines.push(`- About: ${base}/about/`);
+  lines.push(`- Contact page: ${base}/contact/`);
   lines.push(`- Service areas: ${base}/areas/`);
   lines.push(`- All services: ${base}/services/`);
   lines.push('');
