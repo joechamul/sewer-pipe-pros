@@ -7,8 +7,8 @@ const pathname = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '/';
 const links = [
   { href: '/services/', label: 'Services' },
   { href: '/areas/', label: 'Service Areas' },
-  { href: '/#about', label: 'About' },
-  { href: '/#contact', label: 'Contact' },
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
 ];
 
 function isActive(href: string): boolean {

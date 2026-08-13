@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyCall from '../components/StickyCall.astro';
+import AboutSection from '../components/AboutSection.astro';
+import WhyUs from '../components/WhyUs.astro';
+import Icon from '../components/Icon.astro';
+import { BUSINESS, businessId } from '../data/business';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+
+const description =
+  'About Sewer Pipe Pros Inc. — a licensed Los Angeles plumbing, drain & sewer contractor (Lic. #1126184, C36 & C42) built on honest, upfront service. Call (310) 780-0362.';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'About Sewer Pipe Pros Inc.',
+    description,
+    url: `${siteUrl}${base}/about/`,
+    mainEntity: { '@id': businessId(siteUrl, base) },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}${base}/` },
+      { '@type': 'ListItem', position: 2, name: 'About', item: `${siteUrl}${base}/about/` },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="About Sewer Pipe Pros · Licensed LA Plumbing Contractor"
+  description={description}
+  jsonLd={jsonLd}
+>
+  <Header />
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container page-hero__inner">
+        <nav class="page-hero__crumbs" aria-label="Breadcrumb">
+          <a href={`${base}/`}>Home</a>
+          <span aria-hidden="true">/</span>
+          <span>About</span>
+        </nav>
+        <span class="chip chip--dark">
+          <Icon name="shield" size={14} /> Lic. #{BUSINESS.licenseNumber} · C36 &amp; C42
+        </span>
+        <h1 class="page-hero__title">About Sewer Pipe Pros</h1>
+        <p class="page-hero__lead">
+          A licensed Greater Los Angeles plumbing, drain, and sewer contractor built on one idea:
+          honest work, explained upfront, done right the first time.
+        </p>
+      </div>
+    </section>
+
+    <AboutSection />
+    <WhyUs />
+
+    <section class="section section-dark">
+      <div class="container about-cta">
+        <div>
+          <span class="eyebrow">Ready when you are</span>
+          <h2>Talk to a licensed local plumber.</h2>
+          <p>Same-day availability across Greater LA. Emergencies answered 24/7.</p>
+        </div>
+        <div class="about-cta__btns">
+          <a class="btn btn--lg" href="tel:+13107800362">
+            <Icon name="phone" size={20} /> (310) 780-0362
+          </a>
+          <a class="btn btn--ghost btn--lg" href={`${base}/contact/`}>Contact Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <StickyCall />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background:
+      radial-gradient(ellipse at 90% 0%, rgba(63,194,238,0.2), transparent 55%),
+      radial-gradient(ellipse at 10% 110%, rgba(229,32,42,0.2), transparent 55%),
+      var(--ink);
+    color: #fff;
+    padding-block: clamp(3.5rem, 6vw, 5.5rem);
+  }
+  .page-hero__inner { max-width: 920px; }
+  .page-hero__crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 1.25rem;
+  }
+  .page-hero__crumbs a { color: var(--cyan); }
+  .page-hero__title { color: #fff; margin: 1rem 0 1rem; }
+  .page-hero__lead { color: #c9ccd6; max-width: 60ch; font-size: 1.15rem; }
+
+  .about-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .about-cta h2 { color: #fff; }
+  .about-cta p { color: #c9ccd6; margin: 0; }
+  .about-cta .eyebrow { color: var(--cyan); }
+  .about-cta .eyebrow::before,
+  .about-cta .eyebrow::after { background: var(--cyan); }
+  .about-cta__btns { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+</style>
