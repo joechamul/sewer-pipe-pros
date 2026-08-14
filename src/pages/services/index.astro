@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import StickyCall from '../../components/StickyCall.astro';
 import ServicesGrid from '../../components/ServicesGrid.astro';
 import ContactSection from '../../components/ContactSection.astro';
+import { services } from '../../data/services';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
@@ -23,8 +24,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span aria-hidden="true">/</span>
           <span>Services</span>
         </nav>
-        <span class="chip chip--dark">23 services · One licensed crew</span>
-        <h1>Plumbing services in Los Angeles.</h1>
+        <span class="chip chip--dark">{services.length} services · One licensed crew</span>
+        <h1>Plumbing, sewer &amp; drain repair services in Los Angeles.</h1>
         <p>
           From a slow kitchen drain to a full trenchless sewer replacement, Sewer Pipe Pros handles every part of the job and stands behind all of it.
         </p>

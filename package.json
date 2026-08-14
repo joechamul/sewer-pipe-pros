@@ -1,7 +1,7 @@
 {
   "name": "sewer-pipe-pros",
   "type": "module",
-  "version": "1.7",
+  "version": "1.8",
   "private": true,
   "description": "Sewer Pipe Pros Inc. — Licensed Los Angeles plumbing, drain & sewer contractor.",
   "scripts": {
