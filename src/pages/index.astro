@@ -29,6 +29,7 @@ import {
   geoCoordinates,
   contactPoint,
   KNOWS_ABOUT,
+  SEO_KEYWORDS,
 } from '../data/business';
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
@@ -48,6 +49,7 @@ const jsonLd = {
   image: `${siteUrl}${base}/logo.png`,
   logo: `${siteUrl}${base}/logo.png`,
   slogan: BUSINESS.slogan,
+  keywords: SEO_KEYWORDS.join(', '),
   areaServed: areas.map((a) => ({ '@type': 'City', name: a.name })),
   address: postalAddress(),
   geo: geoCoordinates(),
@@ -65,8 +67,8 @@ const jsonLd = {
 ---
 
 <BaseLayout
-  title="Sewer Pipe Pros Inc. · LA Plumbing, Drain & Sewer Experts"
-  description="Licensed Los Angeles plumbing, drain & sewer contractor. Trenchless sewer repair, hydro-jetting, water heaters, repipes and more. Call (310) 780-0362."
+  title="Los Angeles Plumbing, Sewer & Drain Repair · Sewer Pipe Pros"
+  description="Licensed Los Angeles plumber for sewer repair, drain cleaning & plumbing repairs. Trenchless sewer repair, hydro-jetting, water heaters & repipes. 24/7. Call (310) 780-0362."
   jsonLd={jsonLd}
 >
   <Header />

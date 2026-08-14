@@ -134,11 +134,16 @@ export function postalAddress() {
  * for. Keep every item to something we genuinely do.
  */
 export const KNOWS_ABOUT = [
+  'Sewer repair',
+  'Sewer line repair',
   'Trenchless sewer line repair',
   'Sewer line replacement',
+  'Plumbing repair',
+  'Emergency plumbing',
+  'Drain cleaning',
+  'Drain and sewer cleaning',
   'Hydro-jetting',
   'Sewer video camera inspection',
-  'Drain cleaning',
   'Water heater installation and repair',
   'Tankless water heaters',
   'Copper and PEX repiping',
@@ -146,6 +151,23 @@ export const KNOWS_ABOUT = [
   'Slab leak detection and repair',
   'Residential plumbing',
   'Commercial plumbing',
+] as const;
+
+/**
+ * Comma-separated head keywords for the `keywords` schema property. These are
+ * the literal phrases people search — kept in sync with what we actually do.
+ */
+export const SEO_KEYWORDS = [
+  'Los Angeles plumber',
+  'plumbing repair Los Angeles',
+  'sewer repair Los Angeles',
+  'sewer line repair',
+  'trenchless sewer repair',
+  'drain cleaning Los Angeles',
+  'hydro jetting',
+  'sewer camera inspection',
+  'water heater repair',
+  'emergency plumber Los Angeles',
 ] as const;
 
 /** Contact point node for the business. */
